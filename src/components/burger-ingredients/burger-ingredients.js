@@ -6,21 +6,9 @@ import {
     CurrencyIcon
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
+import {ingredientProptypes} from "../../utils/prop-types";
 
-const ingredientProptypes = PropTypes.shape({
-    _id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
-    image: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired,
-    __v:PropTypes.number.isRequired
-});
+
 
 export default function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('buns');
@@ -28,7 +16,7 @@ export default function BurgerIngredients(props) {
     return (
         <section className={burgerIngredientsStyle.container}>
             <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
-            <div style={{display: 'flex'}}>
+            <div className={burgerIngredientsStyle.tabs}>
                 <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>
                     Булки
                 </Tab>
@@ -112,5 +100,5 @@ export default function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientProptypes.isRequired)
+    ingredients: PropTypes.arrayOf(ingredientProptypes.isRequired).isRequired
 }
