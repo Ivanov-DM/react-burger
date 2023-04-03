@@ -1,18 +1,19 @@
 import React, {useState} from "react";
 import PropTypes from 'prop-types';
-import {
-    Counter,
-    Tab,
-    CurrencyIcon
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
 import {ingredientProptypes} from "../../utils/prop-types";
-
+import IngredientsCategory from "../ingredients-category/ingredients-category";
 
 
 export default function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('buns');
     const ingredients = props.ingredients;
+    const buns = ingredients.filter(ingredient => ingredient.type === 'bun');
+    const sauces = ingredients.filter(ingredient => ingredient.type === 'sauce');
+    const mains = ingredients.filter(ingredient => ingredient.type === 'main');
+
+
     return (
         <section className={burgerIngredientsStyle.container}>
             <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
@@ -30,69 +31,15 @@ export default function BurgerIngredients(props) {
             <ul className={burgerIngredientsStyle.ingredientTypeList}>
                 <li>
                     <h2 className="text text_type_main-medium mt-10 mb-6">Булки</h2>
-                    <ul className={burgerIngredientsStyle.ingredients}>
-                        {
-                            ingredients.map((ingredient, idx) => {
-                                if (ingredient.type === 'bun') {
-                                    return (
-                                        <li className={burgerIngredientsStyle.ingredient} key={idx}>
-                                            <img className={burgerIngredientsStyle.ingredient_image} src={ingredient.image}/>
-                                            <Counter className={burgerIngredientsStyle.counter}  count={1} size="default"/>
-                                            <p className={`${burgerIngredientsStyle.ingredient_price} text text_type_digits-default mr-2`} >{ingredient.price}</p>
-                                            <div className={burgerIngredientsStyle.ingredient_priceIcon}>
-                                                <CurrencyIcon  />
-                                            </div>
-                                            <h3 className={`${burgerIngredientsStyle.ingredient_name} text text_type_main-default`}>{ingredient.name}</h3>
-                                        </li>
-                                    )
-                                }
-                            })
-                        }
-                    </ul>
-
+                    <IngredientsCategory ingredients={buns} />
                 </li>
                 <li>
                     <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
-                    <ul className={burgerIngredientsStyle.ingredients}>
-                        {
-                            ingredients.map((ingredient, idx) => {
-                                if (ingredient.type === 'sauce') {
-                                    return (
-                                        <li className={burgerIngredientsStyle.ingredient} key={idx}>
-                                            <img className={burgerIngredientsStyle.ingredient_image} src={ingredient.image}/>
-                                            <p className={`${burgerIngredientsStyle.ingredient_price} text text_type_digits-default mr-2`}>{ingredient.price}</p>
-                                            <div className={burgerIngredientsStyle.ingredient_priceIcon}>
-                                                <CurrencyIcon />
-                                            </div>
-                                            <h3 className={`${burgerIngredientsStyle.ingredient_name} text text_type_main-default`}>{ingredient.name}</h3>
-                                        </li>
-                                    )
-                                }
-                            })
-                        }
-                    </ul>
+                    <IngredientsCategory ingredients={sauces} />
                 </li>
                 <li>
                     <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
-                    <ul className={burgerIngredientsStyle.ingredients}>
-                        {
-                            ingredients.map((ingredient, idx) => {
-                                if (ingredient.type === 'main') {
-                                    return (
-                                        <li className={burgerIngredientsStyle.ingredient} key={idx}>
-                                            <img className={burgerIngredientsStyle.ingredient_image} src={ingredient.image}/>
-                                            <p className={`${burgerIngredientsStyle.ingredient_price} text text_type_digits-default mr-2`} >{ingredient.price}</p>
-                                            <div className={burgerIngredientsStyle.ingredient_priceIcon}>
-                                                <CurrencyIcon  />
-                                            </div>
-                                            <h3 className={`${burgerIngredientsStyle.ingredient_name} text text_type_main-default`}>{ingredient.name}</h3>
-                                        </li>
-                                    )
-                                }
-                            })
-                        }
-                    </ul>
-
+                    <IngredientsCategory ingredients={mains} />
                 </li>
             </ul>
         </section>
