@@ -1,0 +1,26 @@
+.header {
+    width: 100%;
+    background-color: #1C1C21;
+}
+
+.header_content {
+    max-width: 1280px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.header_nav {
+    display: flex;
+    gap: 8px;
+}
+
+.header_link {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    border-radius: 50%;
+}
+

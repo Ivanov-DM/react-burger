@@ -1,0 +1,6 @@
+.main_content {
+    max-width: 1240px;
+    width: 100%;
+    display: flex;
+    column-gap: 40px;
+}
