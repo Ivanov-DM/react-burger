@@ -65,7 +65,13 @@ export default function BurgerConstructor(props) {
                 <span className={burgerConstructorStyle.burgerInfo_priceIcon}>
                         <CurrencyIcon type="primary"/>
                     </span>
-                <Button htmlType="button" type="primary" size="medium" extraClass="ml-10">Оформить заказ</Button>
+                <Button
+                    htmlType="button"
+                    type="primary"
+                    size="medium"
+                    extraClass="ml-10"
+                    onClick={() => props.setVisible(true)}
+                >Оформить заказ</Button>
             </div>
         </section>
     )

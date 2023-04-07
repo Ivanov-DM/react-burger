@@ -1,6 +1,5 @@
 .image {
     grid-area: image;
-    cursor: pointer;
 }
 
 .price {

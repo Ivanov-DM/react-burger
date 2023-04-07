@@ -1,0 +1,32 @@
+.container {
+    width: 720px;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    box-shadow: 0 24px 32px rgba(0, 0, 0, 0.04),
+                0 16px 24px rgba(0, 0, 0, 0.04),
+                0 4px 8px rgba(0, 0, 0, 0.04),
+                0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__button {
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

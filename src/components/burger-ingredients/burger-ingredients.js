@@ -13,7 +13,6 @@ export default function BurgerIngredients(props) {
     const sauces = ingredients.filter(ingredient => ingredient.type === 'sauce');
     const mains = ingredients.filter(ingredient => ingredient.type === 'main');
 
-
     return (
         <section className={burgerIngredientsStyle.container}>
             <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
@@ -31,15 +30,27 @@ export default function BurgerIngredients(props) {
             <ul className={burgerIngredientsStyle.ingredientTypeList}>
                 <li>
                     <h2 className="text text_type_main-medium mt-10 mb-6">Булки</h2>
-                    <IngredientsCategory ingredients={buns} />
+                    <IngredientsCategory
+                        ingredients={buns}
+                        setVisible={props.setVisible}
+                        setIngredient={props.setIngredient}
+                    />
                 </li>
                 <li>
                     <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
-                    <IngredientsCategory ingredients={sauces} />
+                    <IngredientsCategory
+                        ingredients={sauces}
+                        setVisible={props.setVisible}
+                        setIngredient={props.setIngredient}
+                    />
                 </li>
                 <li>
                     <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
-                    <IngredientsCategory ingredients={mains} />
+                    <IngredientsCategory
+                        ingredients={mains}
+                        setVisible={props.setVisible}
+                        setIngredient={props.setIngredient}
+                    />
                 </li>
             </ul>
         </section>
@@ -47,5 +58,7 @@ export default function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientProptypes.isRequired).isRequired
+    ingredients: PropTypes.arrayOf(ingredientProptypes.isRequired).isRequired,
+    setVisible: PropTypes.func.isRequired,
+    setIngredient: PropTypes.func.isRequired
 }

@@ -13,4 +13,5 @@
                          "name name";
     row-gap: 4px;
     position: relative;
+    cursor: pointer;
 }
