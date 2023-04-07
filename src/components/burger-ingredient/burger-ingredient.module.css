@@ -1,28 +1,28 @@
 .image {
-    grid-area: image;
+  grid-area: image;
 }
 
 .price {
-    grid-area: price;
-    justify-self: right;
-    align-self: center;
+  grid-area: price;
+  justify-self: right;
+  align-self: center;
 }
 
 .priceIcon {
-    grid-area: priceIcon;
-    justify-self: left;
-    align-self: center;
-    display: flex;
+  grid-area: priceIcon;
+  justify-self: left;
+  align-self: center;
+  display: flex;
 }
 
 .name {
-    grid-area: name;
-    text-align: center;
-    min-height: 48px;
+  grid-area: name;
+  text-align: center;
+  min-height: 48px;
 }
 
 .counter {
-    position: absolute;
-    top: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
 }

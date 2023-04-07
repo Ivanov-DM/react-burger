@@ -1,81 +1,82 @@
 .container {
-    width: 100%;
-    max-height: 912px;
-    overflow: hidden;
+  width: 100%;
+  max-height: 912px;
+  overflow: hidden;
 }
 
 .tabs {
-    display: flex;
+  display: flex;
 }
 
 .ingredientTypeList {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow-y: scroll;
-    max-height: 756px;
-    scrollbar-color: #8585AD #2F2F37;
-    scrollbar-width: thin;
-    scrollbar-gutter: stable;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  max-height: 756px;
+  scrollbar-color: #8585ad #2f2f37;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
 }
 
 .ingredientTypeList::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 .ingredientTypeList::-webkit-scrollbar-track {
-    margin-top: 40px;
-    margin-bottom: 52px;
-    background-color: #2F2F37;
+  margin-top: 40px;
+  margin-bottom: 52px;
+  background-color: #2f2f37;
 }
 
 .ingredientTypeList::-webkit-scrollbar-thumb {
-    background-color: #8585AD;
+  background-color: #8585ad;
 }
 
 .ingredients {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
-    gap: 32px 24px;
-    padding: 0 8px 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+  gap: 32px 24px;
+  padding: 0 8px 0 16px;
 }
 
 .ingredient {
-    display: grid;
-    justify-items: center;
-    grid-template-areas: "image image"
-                         "price priceIcon"
-                         "name name";
-    row-gap: 4px;
-    position: relative;
+  display: grid;
+  justify-items: center;
+  grid-template-areas:
+    "image image"
+    "price priceIcon"
+    "name name";
+  row-gap: 4px;
+  position: relative;
 }
 
 .ingredient_image {
-    grid-area: image;
-    cursor: pointer;
+  grid-area: image;
+  cursor: pointer;
 }
 
 .ingredient_price {
-    grid-area: price;
-    justify-self: right;
-    align-self: center;
+  grid-area: price;
+  justify-self: right;
+  align-self: center;
 }
 
 .ingredient_priceIcon {
-    grid-area: priceIcon;
-    justify-self: left;
-    align-self: center;
-    display: flex;
+  grid-area: priceIcon;
+  justify-self: left;
+  align-self: center;
+  display: flex;
 }
 
 .ingredient_name {
-    grid-area: name;
-    text-align: center;
-    min-height: 48px;
+  grid-area: name;
+  text-align: center;
+  min-height: 48px;
 }
 
 .counter {
-    position: absolute;
-    top: 0;
-    right: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
