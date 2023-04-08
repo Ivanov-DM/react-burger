@@ -10,7 +10,11 @@ export default function BurgerIngredient(props) {
   const ingredient = props.ingredient;
   return (
     <>
-      <img className={burgerIngredientStyles.image} src={ingredient.image} />
+      <img
+        className={burgerIngredientStyles.image}
+        src={ingredient.image}
+        alt={ingredient.name}
+      />
       <Counter
         className={burgerIngredientStyles.counter}
         count={1}
@@ -22,7 +26,7 @@ export default function BurgerIngredient(props) {
         {ingredient.price}
       </p>
       <div className={burgerIngredientStyles.priceIcon}>
-        <CurrencyIcon />
+        <CurrencyIcon type="primary" />
       </div>
       <h3
         className={`${burgerIngredientStyles.name} text text_type_main-default`}

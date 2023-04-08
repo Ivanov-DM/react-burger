@@ -4,7 +4,3 @@
   display: flex;
   column-gap: 40px;
 }
-
-.modal {
-  overflow: hidden;
-}

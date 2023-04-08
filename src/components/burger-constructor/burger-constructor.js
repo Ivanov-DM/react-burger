@@ -8,13 +8,24 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyle from "./burger-constructor.module.css";
 import { ingredientProptypes } from "../../utils/prop-types";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 export default function BurgerConstructor(props) {
+  const [modalWithOrderDetailsVisible, setModalWithOrderDetailsVisible] =
+    React.useState(false);
+  // параметр setOrder на данном этапе разработки не используется
+  const [order, setOrder] = React.useState({ number: "034536" }); // eslint-disable-line
+
   const ingredientsSet = props.ingredientSet;
   const bun = ingredientsSet.find((ingredient) => ingredient.type === "bun");
   const sauceAndMain = ingredientsSet.filter(
     (ingredient) => ingredient.type !== "bun"
   );
+
+  const submitOrder = () => {
+    setModalWithOrderDetailsVisible(true);
+  };
 
   return (
     <section className={`${burgerConstructorStyle.container} pt-25 pl-4`}>
@@ -68,10 +79,21 @@ export default function BurgerConstructor(props) {
           type="primary"
           size="medium"
           extraClass="ml-10"
-          onClick={() => props.setVisible(true)}
+          onClick={submitOrder}
         >
           Оформить заказ
         </Button>
+      </div>
+      <div className="modal">
+        {modalWithOrderDetailsVisible && (
+          <Modal
+            header=""
+            boxStyles="pt-15 pr-10 pb-30 pl-10"
+            setVisible={setModalWithOrderDetailsVisible}
+          >
+            <OrderDetails orderNumber={order.number} />
+          </Modal>
+        )}
       </div>
     </section>
   );

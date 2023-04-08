@@ -22,6 +22,10 @@ code {
   height: 100vh;
 }
 
+.modal {
+  overflow: hidden;
+}
+
 p {
   margin: 0;
   padding: 0;

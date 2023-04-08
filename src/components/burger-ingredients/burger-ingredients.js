@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
 import { ingredientProptypes } from "../../utils/prop-types";
 import IngredientsCategory from "../ingredients-category/ingredients-category";
+import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 export default function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState("buns");
+  const [
+    modalWithIngredientDetailsVisible,
+    setModalWithIngredientDetailsVisible,
+  ] = React.useState(false);
+  const [modalIngredient, setModalIngredient] = React.useState(null);
+
   const ingredients = props.ingredients;
   const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
   const sauces = ingredients.filter(
@@ -37,33 +45,42 @@ export default function BurgerIngredients(props) {
           <h2 className="text text_type_main-medium mt-10 mb-6">Булки</h2>
           <IngredientsCategory
             ingredients={buns}
-            setVisible={props.setVisible}
-            setIngredient={props.setIngredient}
+            setVisible={setModalWithIngredientDetailsVisible}
+            setIngredient={setModalIngredient}
           />
         </li>
         <li>
           <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
           <IngredientsCategory
             ingredients={sauces}
-            setVisible={props.setVisible}
-            setIngredient={props.setIngredient}
+            setVisible={setModalWithIngredientDetailsVisible}
+            setIngredient={setModalIngredient}
           />
         </li>
         <li>
           <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
           <IngredientsCategory
             ingredients={mains}
-            setVisible={props.setVisible}
-            setIngredient={props.setIngredient}
+            setVisible={setModalWithIngredientDetailsVisible}
+            setIngredient={setModalIngredient}
           />
         </li>
       </ul>
+      <div className="modal">
+        {modalWithIngredientDetailsVisible && (
+          <Modal
+            header="Детали ингредиента"
+            boxStyles="pt-10 pr-10 pb-15 pl-10"
+            setVisible={setModalWithIngredientDetailsVisible}
+          >
+            <IngredientDetails ingredient={modalIngredient} />
+          </Modal>
+        )}
+      </div>
     </section>
   );
 }
 
 BurgerIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientProptypes.isRequired).isRequired,
-  setVisible: PropTypes.func.isRequired,
-  setIngredient: PropTypes.func.isRequired,
 };

@@ -14,29 +14,28 @@ const Modal = ({ children, header, boxStyles, setVisible }) => {
     }
   };
 
+  const closeModal = () => {
+    setVisible(false);
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", closeByEscape);
     return () => document.removeEventListener("keydown", closeByEscape);
-  }, []);
+  });
 
   return ReactDOM.createPortal(
-    <ModalOverlay setVisible={setVisible}>
-      <div
-        className={`${modalStyles.container} ${boxStyles}`}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <>
+      <ModalOverlay closeModal={closeModal} />
+      <div className={`${modalStyles.container} ${boxStyles}`}>
         <div className={modalStyles.header}>
           <h3 className="text text_type_main-large"> {header} </h3>
-          <button
-            className={modalStyles.header__button}
-            onClick={() => setVisible(false)}
-          >
+          <button className={modalStyles.header__button} onClick={closeModal}>
             <CloseIcon type="primary" />
           </button>
         </div>
         <div className={modalStyles.content}>{children}</div>
       </div>
-    </ModalOverlay>,
+    </>,
     modalRoot
   );
 };
