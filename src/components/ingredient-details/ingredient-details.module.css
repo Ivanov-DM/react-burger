@@ -1,0 +1,25 @@
+.image {
+  height: 240px;
+}
+
+.name {
+  max-width: 520px;
+  text-align: center;
+}
+
+.details {
+  max-width: 520px;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(max-content, 1fr));
+  column-gap: 20px;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.details__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
