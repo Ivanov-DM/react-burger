@@ -1,68 +1,106 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
 import IngredientsCategory from "../ingredients-category/ingredients-category";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {IngredientsContext} from "../../services/appContext";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/actions/burger-ingredients";
+import { useInView } from "react-intersection-observer";
 
 export default function BurgerIngredients() {
-  const [current, setCurrent] = React.useState("buns");
+  const dispatch = useDispatch();
+  const burgerIngredients = useSelector(
+    (store) => store.burgerIngredients.ingredients
+  );
+
+  const [activeTab, setActiveTab] = React.useState("buns");
+  const [bunsRef, bunsInView, bunsTab] = useInView({ threshold: 0 });
+  const [saucesRef, saucesInView, saucesTab] = useInView({ threshold: 0 });
+  const [mainsRef, mainsInView, mainsTab] = useInView({ threshold: 0 });
+
   const [
     modalWithIngredientDetailsVisible,
     setModalWithIngredientDetailsVisible,
   ] = React.useState(false);
-  const [modalIngredient, setModalIngredient] = React.useState(null);
 
-  const {burgerIngredients} = React.useContext(IngredientsContext);
-
-  const buns = burgerIngredients.filter((ingredient) => ingredient.type === "bun");
+  const buns = burgerIngredients.filter(
+    (ingredient) => ingredient.type === "bun"
+  );
   const sauces = burgerIngredients.filter(
     (ingredient) => ingredient.type === "sauce"
   );
-  const mains = burgerIngredients.filter((ingredient) => ingredient.type === "main");
+  const mains = burgerIngredients.filter(
+    (ingredient) => ingredient.type === "main"
+  );
+
+  const onTabClick = (tabType, entry) => {
+    setActiveTab(tabType);
+    entry.target.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
+  useEffect(() => {
+    mainsInView && setActiveTab("filling");
+    saucesInView && setActiveTab("sauce");
+    bunsInView && setActiveTab("buns");
+  }, [bunsInView, saucesInView, mainsInView]);
 
   return (
     <section className={burgerIngredientsStyle.container}>
       <h1 className="text text_type_main-large mt-10 mb-5">Соберите бургер</h1>
       <div className={burgerIngredientsStyle.tabs}>
-        <Tab value="buns" active={current === "buns"} onClick={setCurrent}>
+        <Tab
+          value="buns"
+          active={activeTab === "buns"}
+          onClick={() => onTabClick("buns", bunsTab)}
+        >
           Булки
         </Tab>
-        <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
+        <Tab
+          value="sauce"
+          active={activeTab === "sauce"}
+          onClick={() => onTabClick("sauce", saucesTab)}
+        >
           Соусы
         </Tab>
         <Tab
           value="filling"
-          active={current === "filling"}
-          onClick={setCurrent}
+          active={activeTab === "filling"}
+          onClick={() => onTabClick("filling", mainsTab)}
         >
           Начинки
         </Tab>
       </div>
       <ul className={burgerIngredientsStyle.ingredientTypeList}>
         <li>
-          <h2 className="text text_type_main-medium mt-10 mb-6">Булки</h2>
+          <h2 className="text text_type_main-medium mt-10 mb-6" ref={bunsRef}>
+            Булки
+          </h2>
           <IngredientsCategory
             ingredients={buns}
             setVisible={setModalWithIngredientDetailsVisible}
-            setIngredient={setModalIngredient}
           />
         </li>
         <li>
-          <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
+          <h2 className="text text_type_main-medium mt-10 mb-6" ref={saucesRef}>
+            Соусы
+          </h2>
           <IngredientsCategory
             ingredients={sauces}
             setVisible={setModalWithIngredientDetailsVisible}
-            setIngredient={setModalIngredient}
           />
         </li>
         <li>
-          <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
+          <h2 className="text text_type_main-medium mt-10 mb-6" ref={mainsRef}>
+            Начинки
+          </h2>
           <IngredientsCategory
             ingredients={mains}
             setVisible={setModalWithIngredientDetailsVisible}
-            setIngredient={setModalIngredient}
           />
         </li>
       </ul>
@@ -73,7 +111,7 @@ export default function BurgerIngredients() {
             boxStyles="pt-10 pr-10 pb-15 pl-10"
             setVisible={setModalWithIngredientDetailsVisible}
           >
-            <IngredientDetails ingredient={modalIngredient} />
+            <IngredientDetails />
           </Modal>
         )}
       </div>

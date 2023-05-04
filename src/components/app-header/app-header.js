@@ -12,12 +12,14 @@ export default function AppHeader() {
     <header className={appHeaderStyles.header}>
       <div className={appHeaderStyles.header_content}>
         <nav className={`${appHeaderStyles.header_nav} pt-4 pb-4`}>
+          {/*eslint-disable-next-line*/}
           <a className={`${appHeaderStyles.header_link} p-4`} href="#">
             <BurgerIcon type="primary" />
             <p className="text_type_main-default text_color_primary ml-2">
               Конструктор
             </p>
           </a>
+          {/*eslint-disable-next-line*/}
           <a className={`${appHeaderStyles.header_link} p-4`} href="#">
             <ListIcon type="secondary" />
             <p className="text_type_main-default text_color_inactive ml-2">
@@ -26,6 +28,7 @@ export default function AppHeader() {
           </a>
         </nav>
         <Logo />
+        {/*eslint-disable-next-line*/}
         <a className={`${appHeaderStyles.header_link} p-4`} href="#">
           <ProfileIcon type="secondary" />
           <p className="text_type_main-default text_color_inactive ml-2">

@@ -6,13 +6,5 @@
 }
 
 .ingredient {
-  display: grid;
-  justify-items: center;
-  grid-template-areas:
-    "image image"
-    "price priceIcon"
-    "name name";
-  row-gap: 4px;
-  position: relative;
-  cursor: pointer;
+  list-style: none;
 }
