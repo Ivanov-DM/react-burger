@@ -4,12 +4,13 @@ import {
   DEC_INGREDIENT_COUNT,
   DELETE_INGREDIENT,
   INC_INGREDIENT_COUNT,
+  RESET_INGREDIENTS,
   SUB_PRICE,
   UPDATE_INGREDIENTS_ORDER,
 } from "../actions/burger-constructor";
 
 const constructorInitialState = {
-  burgerIngredients: {
+  constructorIngredients: {
     bun: [],
     fillings: [],
   },
@@ -25,30 +26,35 @@ export function burgerConstructorReducer(
     case ADD_INGREDIENT: {
       return {
         ...state,
-        burgerIngredients: {
-          ...state.burgerIngredients,
+        constructorIngredients: {
           bun:
             action.ingredient.type === "bun"
               ? [action.ingredient]
-              : state.burgerIngredients.bun,
+              : state.constructorIngredients.bun,
           fillings:
             action.ingredient.type !== "bun"
-              ? [...state.burgerIngredients.fillings, action.ingredient]
-              : state.burgerIngredients.fillings,
+              ? [...state.constructorIngredients.fillings, action.ingredient]
+              : state.constructorIngredients.fillings,
         },
       };
     }
     case DELETE_INGREDIENT: {
       return {
         ...state,
-        burgerIngredients: {
-          ...state.burgerIngredients,
+        constructorIngredients: {
+          ...state.constructorIngredients,
           fillings: [
-            ...state.burgerIngredients.fillings.filter(
+            ...state.constructorIngredients.fillings.filter(
               (_, index) => index !== action.index
             ),
           ],
         },
+      };
+    }
+    case RESET_INGREDIENTS: {
+      return {
+        ...state,
+        ...constructorInitialState,
       };
     }
     case ADD_PRICE: {
@@ -84,15 +90,16 @@ export function burgerConstructorReducer(
       };
     }
     case UPDATE_INGREDIENTS_ORDER: {
-      const dragIngredient = state.burgerIngredients.fillings[action.dragIndex];
+      const dragIngredient =
+        state.constructorIngredients.fillings[action.dragIndex];
       const hoverIngredient =
-        state.burgerIngredients.fillings[action.hoverIndex];
-      state.burgerIngredients.fillings[action.dragIndex] = hoverIngredient;
-      state.burgerIngredients.fillings[action.hoverIndex] = dragIngredient;
+        state.constructorIngredients.fillings[action.hoverIndex];
+      state.constructorIngredients.fillings[action.dragIndex] = hoverIngredient;
+      state.constructorIngredients.fillings[action.hoverIndex] = dragIngredient;
       return {
         ...state,
-        burgerIngredients: {
-          ...state.burgerIngredients,
+        constructorIngredients: {
+          ...state.constructorIngredients,
         },
       };
     }

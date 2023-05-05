@@ -10,9 +10,11 @@ import { useSelector } from "react-redux";
 
 export default function BurgerIngredient(props) {
   const ingredient = props.ingredient;
-  const ingredientsCount = useSelector(
-    (store) => store.constructorIngredients.ingredientsCount
-  );
+
+  const getIngredientCount = (store) =>
+    store.constructorIngredients.ingredientsCount;
+
+  const ingredientsCount = useSelector(getIngredientCount);
 
   const [, dragRef] = useDrag({
     type: "ingredient",

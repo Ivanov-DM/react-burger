@@ -3,9 +3,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export default function IngredientDetails() {
-  const ingredientDetails = useSelector(
-    (store) => store.ingredientDetails.ingredientDetails
-  );
+  const getIngredientDetails = (store) =>
+    store.ingredientDetails.ingredientDetails;
+  const ingredientDetails = useSelector(getIngredientDetails);
 
   return (
     <>

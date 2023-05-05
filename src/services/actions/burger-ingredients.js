@@ -9,17 +9,23 @@ export function getIngredients() {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });
-    getIngredientsRequest().then((res) => {
-      if (res && res.success) {
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          ingredients: res.data,
-        });
-      } else {
+    getIngredientsRequest()
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: GET_INGREDIENTS_SUCCESS,
+            ingredients: res.data,
+          });
+        } else {
+          dispatch({
+            type: GET_INGREDIENTS_ERROR,
+          });
+        }
+      })
+      .catch(() => {
         dispatch({
           type: GET_INGREDIENTS_ERROR,
         });
-      }
-    });
+      });
   };
 }

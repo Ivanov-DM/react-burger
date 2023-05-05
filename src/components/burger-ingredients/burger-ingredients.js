@@ -10,9 +10,9 @@ import { useInView } from "react-intersection-observer";
 
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
-  const burgerIngredients = useSelector(
-    (store) => store.burgerIngredients.ingredients
-  );
+
+  const getBurgerIngredients = (store) => store.burgerIngredients.ingredients;
+  const burgerIngredients = useSelector(getBurgerIngredients);
 
   const [activeTab, setActiveTab] = React.useState("buns");
   const [bunsRef, bunsInView, bunsTab] = useInView({ threshold: 0 });

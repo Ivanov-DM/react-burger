@@ -20,21 +20,28 @@ import {
 } from "../../services/actions/burger-constructor";
 import { createOrder } from "../../services/actions/order-details";
 import SortedElement from "../sorted-element/sorted-element";
+import { v4 as uuidv4 } from "uuid";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const [modalWithOrderDetailsVisible, setModalWithOrderDetailsVisible] =
     React.useState(false);
-  const { burgerIngredients, orderDetails, totalPrice } = useSelector(
-    (store) => ({
-      burgerIngredients: store.constructorIngredients.burgerIngredients,
+
+  const getStateForBurgerConstructor = (store) => {
+    return {
+      constructorIngredients:
+        store.constructorIngredients.constructorIngredients,
       orderDetails: store.orderDetails.orderDetails,
       totalPrice: store.constructorIngredients.totalPrice,
-    })
+    };
+  };
+
+  const { constructorIngredients, orderDetails, totalPrice } = useSelector(
+    getStateForBurgerConstructor
   );
 
-  const [bun] = burgerIngredients.bun;
-  const sauceAndMain = burgerIngredients.fillings;
+  const [bun] = constructorIngredients.bun;
+  const sauceAndMain = constructorIngredients.fillings;
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
@@ -42,16 +49,21 @@ export default function BurgerConstructor() {
       if (bun && bun._id === item._id) {
         return;
       }
-      dispatch({ type: ADD_INGREDIENT, ingredient: item });
-      dispatch({ type: INC_INGREDIENT_COUNT, ingredientId: item._id });
-      if (item.type !== "bun") {
-        dispatch({ type: ADD_PRICE, price: item.price });
-      } else if (bun && item.type === "bun") {
+      const constructorIngredient = Object.assign({}, item);
+      constructorIngredient.uuid = uuidv4();
+      dispatch({ type: ADD_INGREDIENT, ingredient: constructorIngredient });
+      dispatch({
+        type: INC_INGREDIENT_COUNT,
+        ingredientId: constructorIngredient._id,
+      });
+      if (constructorIngredient.type !== "bun") {
+        dispatch({ type: ADD_PRICE, price: constructorIngredient.price });
+      } else if (bun && constructorIngredient.type === "bun") {
         dispatch({ type: SUB_PRICE, price: bun.price * 2 });
-        dispatch({ type: ADD_PRICE, price: item.price * 2 });
+        dispatch({ type: ADD_PRICE, price: constructorIngredient.price * 2 });
         dispatch({ type: DEC_INGREDIENT_COUNT, ingredientId: bun._id });
       } else {
-        dispatch({ type: ADD_PRICE, price: item.price * 2 });
+        dispatch({ type: ADD_PRICE, price: constructorIngredient.price * 2 });
       }
     },
   });
@@ -98,7 +110,7 @@ export default function BurgerConstructor() {
       <ul className={`${burgerConstructorStyle.ingredient_list} mt-4 mb-4`}>
         {sauceAndMain.map((ingredient, idx) => {
           return (
-            <SortedElement key={idx} index={idx}>
+            <SortedElement key={ingredient.uuid} index={idx}>
               <span
                 className={`${burgerConstructorStyle.ingredient_dragIcon} mr-2`}
               >

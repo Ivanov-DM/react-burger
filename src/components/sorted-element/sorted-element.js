@@ -3,6 +3,7 @@ import sortedElementStyle from "./sorted-element.module.css";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
 import { UPDATE_INGREDIENTS_ORDER } from "../../services/actions/burger-constructor";
+import PropTypes from "prop-types";
 
 const SortedElement = ({ children, index }) => {
   const dispatch = useDispatch();
@@ -45,3 +46,8 @@ const SortedElement = ({ children, index }) => {
 };
 
 export default SortedElement;
+
+SortedElement.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  index: PropTypes.number.isRequired,
+};
