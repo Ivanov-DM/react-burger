@@ -1,15 +1,18 @@
 import React from "react";
 import orderDetailsStyles from "./order-details.module.css";
 import doneIconPath from "../../images/done-icon.svg";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const OrderDetails = ({ orderNumber }) => {
+const OrderDetails = () => {
+  const getOrderDetails = (store) => store.orderDetails.orderDetails;
+  const orderDetails = useSelector(getOrderDetails);
+
   return (
     <>
       <h2
         className={`${orderDetailsStyles.number} text text_type_digits-large`}
       >
-        {orderNumber}
+        {orderDetails === null ? "..." : orderDetails.number}
       </h2>
       <p className="text text_type_main-medium mt-8">Идентификатор заказа</p>
       <img
@@ -28,7 +31,3 @@ const OrderDetails = ({ orderNumber }) => {
 };
 
 export default OrderDetails;
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
-};

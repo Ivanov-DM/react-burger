@@ -5,21 +5,38 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientStyles from "./burger-ingredient.module.css";
 import { ingredientProptypes } from "../../utils/prop-types";
+import { useDrag } from "react-dnd";
+import { useSelector } from "react-redux";
 
 export default function BurgerIngredient(props) {
   const ingredient = props.ingredient;
+
+  const getIngredientCount = (store) =>
+    store.constructorIngredients.ingredientsCount;
+
+  const ingredientsCount = useSelector(getIngredientCount);
+
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: ingredient,
+  });
+
   return (
-    <>
+    <div className={burgerIngredientStyles.ingredientBox} ref={dragRef}>
       <img
         className={burgerIngredientStyles.image}
         src={ingredient.image}
         alt={ingredient.name}
       />
-      <Counter
-        className={burgerIngredientStyles.counter}
-        count={1}
-        size="default"
-      />
+      {ingredientsCount[ingredient._id] ? (
+        <Counter
+          className={burgerIngredientStyles.counter}
+          count={ingredientsCount[ingredient._id]}
+          size="default"
+        />
+      ) : (
+        ""
+      )}
       <p
         className={`${burgerIngredientStyles.price} text text_type_digits-default mr-2`}
       >
@@ -33,7 +50,7 @@ export default function BurgerIngredient(props) {
       >
         {ingredient.name}
       </h3>
-    </>
+    </div>
   );
 }
 

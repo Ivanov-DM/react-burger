@@ -4,18 +4,23 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { DELETE_INGREDIENT_DETAILS } from "../../services/actions/ingredient-details";
 
 const modalRoot = document.getElementById("modals");
 
 const Modal = ({ children, header, boxStyles, setVisible }) => {
+  const dispatch = useDispatch();
+
   const closeByEscape = (evt) => {
     if (evt.key === "Escape") {
-      setVisible(false);
+      closeModal();
     }
   };
 
   const closeModal = () => {
     setVisible(false);
+    dispatch({ type: DELETE_INGREDIENT_DETAILS });
   };
 
   useEffect(() => {
