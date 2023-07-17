@@ -1,0 +1,23 @@
+.container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    column-gap: 60px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 120px 0 0 0;
+    margin: 0;
+}
+
+.navItem {
+    min-height: 64px;
+    min-width: 320px;
+    text-decoration: none;
+}
+
+.caption {
+    max-width: 320px;
+}
