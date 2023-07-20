@@ -6,11 +6,15 @@
 }
 
 .buttonContainer {
-    display: flex;
+    display: none;
     gap: 20px;
     justify-content: end;
 }
 
 .cancelButton {
     padding: 16px 8px;
+}
+
+.buttonContainer_visible {
+    display: flex;
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import {Routes, Route, useLocation} from "react-router-dom";
 import {
     HomePage,
@@ -12,14 +13,21 @@ import {
 } from "../../pages";
 import {OnlyAuth, OnlyUnAuth} from "../protected-route/protected-route";
 import {useNavigate} from "react-router";
+import { useDispatch } from "react-redux";
 import AppHeader from "../app-header/app-header";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
+import {checkUserAuth} from "../../services/actions/auth";
 
 export default function App() {
+    const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
     const background = location.state && location.state.background;
+
+    useEffect(() => {
+        dispatch(checkUserAuth());
+    }, []);
 
     const handleModalClose = () => {
         navigate(-1);

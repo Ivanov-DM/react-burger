@@ -61,6 +61,19 @@ export const getUserRequest = () =>
         },
     });
 
+export const updateUserRequest = (data) =>
+    request(`${BURGER_API_URL}/auth/user`, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: 'Bearer ' + getCookie('accessToken')
+        },
+        body: JSON.stringify({
+            ...data
+        })
+    });
+
+
 export const forgotPasswordRequest = (email) =>
     request(`${BURGER_API_URL}/password-reset`, {
         method: 'POST',

@@ -1,20 +1,80 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import styles from "./profile.module.css";
 import {
     Button,
     Input,
     PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {updateUser} from "../services/actions/auth";
 
 export const ProfilePage = () => {
+    const dispatch = useDispatch();
     const getUserData = (store) => store.userData.user;
+    const [isVisible, setIsVisible] = useState(false);
     const user = useSelector(getUserData);
-    const [form, setValue] = useState({login: user.email, password: '', name: user.name});
+    const initialFormState = {email: user.email, password: '', name: user.name};
+    const [form, setValue] = useState(initialFormState);
+
+    const updateUserRequest = useSelector((store) => store.userData.updateUserRequest);
+
     const onChange = e => {
         setValue({...form, [e.target.name]: e.target.value});
+        if (e.target.name === 'name' && e.target.value === user.name) {
+            if (form.email === user.email && !form.password) {
+                setIsVisible(false)
+            }
+        } else if (e.target.name === 'email' && e.target.value === user.email) {
+            if (form.name === user.name && !form.password) {
+                setIsVisible(false)
+            }
+        } else if (e.target.name === 'password' && !e.target.value) {
+            if (form.email === user.email && form.name === user.name) {
+                setIsVisible(false)
+            }
+        } else {
+            setIsVisible(true)
+        }
     };
 
+    const resetForm = () => {
+        setValue(initialFormState);
+        setIsVisible(false);
+    }
+
+    const updateUserData = useCallback(
+        evt => {
+            evt.preventDefault();
+            dispatch(updateUser(getUpdatedValue(form, user)))
+        }, [dispatch, form]
+    );
+
+    const getUpdatedValue = (obj1, obj2) => {
+        const res = {};
+        Object.keys(obj1).forEach(key => {
+            if (key === 'password') {
+                if (obj1[key] !== '') {
+                    res[key] = obj1[key]
+                } else {
+                    return
+                }
+            }
+            if (obj1[key] !== obj2[key]) {
+                res[key] = obj1[key]
+            }
+        })
+        return res
+    }
+
+    // if (updateUserRequest) {
+    //     return (
+    //         <>
+    //             <div className="page">
+    //                 <span className="loader"></span>
+    //             </div>
+    //         </>
+    //     );
+    // }
 
     return (
         <form className={styles.form}>
@@ -31,12 +91,12 @@ export const ProfilePage = () => {
                 extraClass="mb-6"
             />
             <Input
-                type={'text'}
+                type={'email'}
                 placeholder={'Логин'}
                 onChange={onChange}
                 icon="EditIcon"
-                value={form.login}
-                name={'login'}
+                value={form.email}
+                name={'email'}
                 error={false}
                 errorText={'Ошибка'}
                 size={'default'}
@@ -49,12 +109,13 @@ export const ProfilePage = () => {
                 icon="EditIcon"
                 extraClass="mb-6"
             />
-            <div className={styles.buttonContainer}>
+            <div className={`${styles.buttonContainer} ${isVisible ? styles.buttonContainer_visible : ''}`}>
                 <Button
                     htmlType="button"
                     type="secondary"
                     size="medium"
                     extraClass={styles.cancelButton}
+                    onClick={resetForm}
                 >
                     Отменить
                 </Button>
@@ -63,10 +124,11 @@ export const ProfilePage = () => {
                     type="primary"
                     size="medium"
                     extraClass={styles.link}
+                    onClick={updateUserData}
                 >
                     Сохранить
                 </Button>
             </div>
         </form>
-    )
+    );
 }

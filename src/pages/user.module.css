@@ -16,6 +16,7 @@
     min-height: 64px;
     min-width: 320px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .caption {

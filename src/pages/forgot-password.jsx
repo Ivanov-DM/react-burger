@@ -1,44 +1,37 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useCallback} from "react";
 import {useNavigate} from "react-router";
-import AppHeader from "../components/app-header/app-header";
 import {
     EmailInput,
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {forgotPassword} from "../services/actions/auth";
 
 import styles from "./page.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {Navigate} from "react-router-dom";
+import {forgotPasswordRequest} from "../utils/burger-api";
 
 export const ForgotPasswordPage = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const getForgotPasswordStatus = (store) => store.userData.forgotPasswordSuccess;
-    const isPasswordReset = useSelector(getForgotPasswordStatus);
+    const [email, setEmail] = React.useState('');
 
     const handleClick = (path) => {
         navigate(path, {replace: true});
     }
 
-    const [email, setEmail] = React.useState('');
     const onChange = e => {
         setEmail(e.target.value)
     }
 
-    const reset = useCallback(
-        evt => {
+    const reset = evt => {
             evt.preventDefault();
-            dispatch(forgotPassword(email));
-        }, [dispatch, email]
-    );
+            forgotPasswordRequest(email)
+                .then(res => {
+                    if (res.success) {
+                        localStorage.setItem("resetPasswordSuccess", res.success);
+                        navigate('/reset-password', {replace: true});
+                    }
+                })
+                .catch(err => console.log(err));
 
-    if (isPasswordReset) {
-        return (
-            <Navigate to="/reset-password" />
-        )
-    }
+        };
 
     return (
         <>
@@ -53,7 +46,7 @@ export const ForgotPasswordPage = () => {
                             isIcon={false}
                         />
                         <Button
-                            htmlType="button"
+                            htmlType="submit"
                             type="primary"
                             size="medium"
                             onClick={reset}

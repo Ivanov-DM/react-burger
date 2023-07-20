@@ -1,6 +1,5 @@
 import React, {useCallback, useState} from "react";
 import {useNavigate} from "react-router";
-import AppHeader from "../components/app-header/app-header";
 import {
     PasswordInput,
     Input,
@@ -8,17 +7,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./page.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {resetPassword} from "../services/actions/auth";
 import {Navigate} from "react-router-dom";
+import {resetPasswordRequest} from "../utils/burger-api";
 
 export const ResetPasswordPage = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [form, setValue] = useState({ password: '', token: '' });
-
-    const getResetPasswordStatus = (store) => store.userData.resetPasswordSuccess;
-    const isPasswordChenged = useSelector(getResetPasswordStatus);
 
     const handleClick = (path) => {
         navigate(path, {replace: true});
@@ -28,14 +22,20 @@ export const ResetPasswordPage = () => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
-    const savePassword = useCallback(
+    const resetPassword = useCallback(
         evt => {
             evt.preventDefault();
-            dispatch(resetPassword(form));
-        }, [dispatch, form]
+            resetPasswordRequest(form)
+                .then(res => {
+                    if (res.success) {
+                        localStorage.removeItem('resetPasswordSuccess');
+                        navigate('/login', {replace: true});
+                    }
+                });
+        }, [form]
     )
 
-    if (isPasswordChenged) {
+    if (!localStorage.getItem('resetPasswordSuccess')) {
         return (
             <Navigate to="/login" />
         )
@@ -64,10 +64,10 @@ export const ResetPasswordPage = () => {
                             size={'default'}
                         />
                         <Button
-                            htmlType="button"
+                            htmlType="submit"
                             type="primary"
                             size="medium"
-                            onClick={savePassword}
+                            onClick={resetPassword}
                             extraClass="mt-6"
                         >
                             Сохранить
@@ -90,5 +90,5 @@ export const ResetPasswordPage = () => {
                 </div>
             </div>
         </>
-    )
+    );
 }

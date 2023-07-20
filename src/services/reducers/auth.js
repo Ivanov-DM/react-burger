@@ -8,31 +8,44 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_ERROR,
-    FORGOT_PASSWORD_REQUEST,
-    FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_ERROR,
-    RESET_PASSWORD_REQUEST,
-    RESET_PASSWORD_SUCCESS, RESET_PASSWORD_ERROR
+    SET_AUTH_CHECKED,
+    SET_USER,
+    SIGN_OUT_REQUEST,
+    SIGN_OUT_SUCCESS,
+    SIGN_OUT_ERROR,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_ERROR
 } from "../actions/auth";
 
 const authInitialState = {
     user: null,
+    isAuthChecked: false,
     registerRequest: false,
     registerError: false,
     signInRequest: false,
     signInError: false,
     getUserRequest: false,
     getUserError: false,
-    forgotPasswordRequest: false,
-    forgotPasswordSuccess: false,
-    forgotPasswordError: false,
-    resetPasswordRequest: false,
-    resetPasswordSuccess: false,
-    resetPasswordError: false,
+    updateUserRequest: false,
+    updateUserError: false,
+    signOutRequest: false,
+    signOutError: false,
 }
 
 export function authReducer(state = authInitialState, action) {
     switch (action.type) {
+        case SET_AUTH_CHECKED: {
+            return {
+                ...state,
+                isAuthChecked: action.payload
+            }
+        }
+        case SET_USER:
+            return {
+                ...state,
+                user: action.payload
+            }
         case REGISTER_REQUEST: {
             return {
                 ...state,
@@ -77,6 +90,28 @@ export function authReducer(state = authInitialState, action) {
                 signInRequest: false,
             };
         }
+        case SIGN_OUT_REQUEST: {
+            return {
+                ...state,
+                signOutRequest: true,
+            };
+        }
+        case SIGN_OUT_SUCCESS: {
+            return {
+                ...state,
+                signOutError: false,
+                user: null,
+                signOutRequest: false,
+            };
+        }
+        case SIGN_OUT_ERROR: {
+            return {
+                ...state,
+                user: null,
+                signOutError: true,
+                signOutRequest: false,
+            };
+        }
         case GET_USER_REQUEST: {
             return {
                 ...state,
@@ -99,44 +134,26 @@ export function authReducer(state = authInitialState, action) {
                 getUserRequest: false,
             };
         }
-        case FORGOT_PASSWORD_REQUEST: {
+        case UPDATE_USER_REQUEST: {
             return {
                 ...state,
-                forgotPasswordRequest: true,
+                updateUserRequest: true,
             };
         }
-        case FORGOT_PASSWORD_SUCCESS: {
+        case UPDATE_USER_SUCCESS: {
             return {
                 ...state,
-                forgotPasswordSuccess: true,
-                forgotPasswordRequest: false,
+                updateUserError: false,
+                user: action.userData,
+                updateUserRequest: false,
             };
         }
-        case FORGOT_PASSWORD_ERROR: {
+        case UPDATE_USER_ERROR: {
             return {
                 ...state,
-                forgotPasswordError: true,
-                forgotPasswordRequest: false,
-            };
-        }
-        case RESET_PASSWORD_REQUEST: {
-            return {
-                ...state,
-                resetPasswordRequest: true,
-            };
-        }
-        case RESET_PASSWORD_SUCCESS: {
-            return {
-                ...state,
-                resetPasswordSuccess: true,
-                resetPasswordRequest: false,
-            };
-        }
-        case RESET_PASSWORD_ERROR: {
-            return {
-                ...state,
-                resetPasswordError: true,
-                resetPasswordRequest: false,
+                user: null,
+                updateUserError: true,
+                updateUserRequest: false,
             };
         }
         default:

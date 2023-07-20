@@ -1,11 +1,14 @@
 import {
-    getIngredientsRequest,
     getUserRequest,
     loginRequest,
     registerRequest,
-    forgotPasswordRequest, resetPasswordRequest, logoutRequest
+    logoutRequest,
+    updateUserRequest
 } from "../../utils/burger-api";
-import {getCookie, setCookie} from "../../utils/cookie";
+import {deleteCookie, getCookie, setCookie} from "../../utils/cookie";
+
+export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
+export const SET_USER = "SET_USER";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_ERROR = "REGISTER_ERROR";
@@ -15,6 +18,10 @@ export const GET_USER_REQUEST = "GET_USER_REQUEST";
 export const GET_USER_ERROR = "GET_USER_ERROR";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
 
+export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USER_ERROR = "UPDATE_USER_ERROR";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+
 export const SIGN_IN_REQUEST = "SIGN_IN_REQUEST";
 export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
 export const SIGN_IN_SUCCESS = "SIGN_IN_SUCCESS";
@@ -23,13 +30,15 @@ export const SIGN_OUT_REQUEST = "SIGN_OUT_REQUEST";
 export const SIGN_OUT_ERROR = "SIGN_OUT_ERROR";
 export const SIGN_OUT_SUCCESS = "SIGN_OUT_SUCCESS";
 
-export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
-export const FORGOT_PASSWORD_ERROR = "FORGOT_PASSWORD_ERROR";
-export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const setAuthChecked = (value) => ({
+    type: SET_AUTH_CHECKED,
+    payload: value,
+});
 
-export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
-export const RESET_PASSWORD_ERROR = "RESET_PASSWORD_ERROR";
-export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const setUser = (user) => ({
+    type: SET_USER,
+    payload: user,
+});
 
 export function registerUser(userData) {
     return function (dispatch) {
@@ -62,7 +71,7 @@ export function getUser() {
         dispatch({
             type: GET_USER_REQUEST,
         });
-        getUserRequest()
+        return getUserRequest()
             .then((res) => {
                 if (res && res.success) {
                     dispatch({
@@ -78,6 +87,48 @@ export function getUser() {
             .catch(() => {
                 dispatch({
                     type: GET_USER_ERROR,
+                });
+            });
+    };
+}
+
+export const checkUserAuth = () => {
+    return (dispatch) => {
+        if (getCookie('accessToken')) {
+            dispatch(getUser())
+                .catch(() => {
+                    deleteCookie('accessToken');
+                    deleteCookie('refreshToken');
+                    dispatch(setUser(null));
+                })
+                .finally(() => dispatch(setAuthChecked(true)));
+        } else {
+            dispatch(setAuthChecked(true));
+        }
+    };
+};
+
+export function updateUser(data) {
+    return function (dispatch) {
+        dispatch({
+            type: UPDATE_USER_REQUEST,
+        });
+        return updateUserRequest(data)
+            .then((res) => {
+                if (res && res.success) {
+                    dispatch({
+                        type: UPDATE_USER_SUCCESS,
+                        userData: res.user,
+                    });
+                } else {
+                    dispatch({
+                        type: UPDATE_USER_ERROR,
+                    });
+                }
+            })
+            .catch(() => {
+                dispatch({
+                    type: UPDATE_USER_ERROR,
                 });
             });
     };
@@ -101,6 +152,7 @@ export function signIn(userData) {
                         type: SIGN_IN_SUCCESS,
                         userData: res.user,
                     });
+                    dispatch(setAuthChecked(true));
                 } else {
                     dispatch({
                         type: SIGN_IN_ERROR,
@@ -123,9 +175,12 @@ export function signOut() {
         logoutRequest()
             .then((res) => {
                 if (res && res.success) {
+                    deleteCookie('accessToken');
+                    deleteCookie('refreshToken');
                     dispatch({
                         type: SIGN_OUT_SUCCESS,
                     });
+                    dispatch(setUser(null));
                 } else {
                     dispatch({
                         type: SIGN_OUT_ERROR,
@@ -135,56 +190,6 @@ export function signOut() {
             .catch(() => {
                 dispatch({
                     type: SIGN_OUT_ERROR,
-                });
-            });
-    };
-}
-
-export function forgotPassword(email) {
-    return function (dispatch) {
-        dispatch({
-            type: FORGOT_PASSWORD_REQUEST,
-        });
-        forgotPasswordRequest(email)
-            .then((res) => {
-                if (res && res.success) {
-                    dispatch({
-                        type: FORGOT_PASSWORD_SUCCESS,
-                    });
-                } else {
-                    dispatch({
-                        type: FORGOT_PASSWORD_ERROR,
-                    });
-                }
-            })
-            .catch(() => {
-                dispatch({
-                    type: FORGOT_PASSWORD_ERROR,
-                });
-            });
-    };
-}
-
-export function resetPassword(passwordData) {
-    return function (dispatch) {
-        dispatch({
-            type: RESET_PASSWORD_REQUEST,
-        });
-        resetPasswordRequest(passwordData)
-            .then((res) => {
-                if (res && res.success) {
-                    dispatch({
-                        type: RESET_PASSWORD_SUCCESS,
-                    });
-                } else {
-                    dispatch({
-                        type: RESET_PASSWORD_ERROR,
-                    });
-                }
-            })
-            .catch(() => {
-                dispatch({
-                    type: RESET_PASSWORD_ERROR,
                 });
             });
     };
