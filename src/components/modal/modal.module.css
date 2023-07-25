@@ -27,7 +27,7 @@
   cursor: pointer;
 }
 
-.content {
+.withoutModal {
   display: flex;
   align-items: center;
   flex-direction: column;

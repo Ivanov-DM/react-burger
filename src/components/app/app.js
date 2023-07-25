@@ -38,7 +38,7 @@ export default function App() {
             <AppHeader />
             <Routes location={background || location}>
                 <Route path="/" element={<HomePage />}/>
-                <Route path="ingredients/:ingredientsId" element={<IngredientDetails />} />
+                <Route path="/ingredients/:ingredientId" element={<IngredientDetails inModal={false} />} />
                 <Route path="/profile" element={<OnlyAuth component={<UserPage />}/>}>
                     <Route index element={<OnlyAuth component={<ProfilePage />}/>}/>
                     <Route path="orders" element={<OnlyAuth component={<OrdersPage />}/>}/>
@@ -51,9 +51,13 @@ export default function App() {
             </Routes>
             {background && (
                 <Routes>
-                    <Route path="ingredients/:ingredientId" element={
-                        <Modal onClose={handleModalClose}>
-                            <IngredientDetails />
+                    <Route path="/ingredients/:ingredientId" element={
+                        <Modal
+                          header="Детали ингредиента"
+                          boxStyles="pt-10 pr-10 pb-15 pl-10"
+                          onClose={handleModalClose}
+                        >
+                          <IngredientDetails inModal={true} />
                         </Modal>
                     }
                     />

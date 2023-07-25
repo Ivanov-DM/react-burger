@@ -4,13 +4,10 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import { DELETE_INGREDIENT_DETAILS } from "../../services/actions/ingredient-details";
 
 const modalRoot = document.getElementById("modals");
 
-const Modal = ({ children, header, boxStyles, setVisible }) => {
-  const dispatch = useDispatch();
+const Modal = ({ children, header, boxStyles, onClose }) => {
 
   const closeByEscape = (evt) => {
     if (evt.key === "Escape") {
@@ -19,8 +16,7 @@ const Modal = ({ children, header, boxStyles, setVisible }) => {
   };
 
   const closeModal = () => {
-    setVisible(false);
-    dispatch({ type: DELETE_INGREDIENT_DETAILS });
+    onClose();
   };
 
   useEffect(() => {
@@ -51,5 +47,5 @@ Modal.propTypes = {
   children: PropTypes.element.isRequired,
   header: PropTypes.string.isRequired,
   boxStyles: PropTypes.string.isRequired,
-  setVisible: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };

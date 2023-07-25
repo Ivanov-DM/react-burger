@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
 import IngredientsCategory from "../ingredients-category/ingredients-category";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import { useInView } from "react-intersection-observer";
@@ -18,11 +16,6 @@ export default function BurgerIngredients() {
   const [bunsRef, bunsInView, bunsTab] = useInView({ threshold: 0 });
   const [saucesRef, saucesInView, saucesTab] = useInView({ threshold: 0 });
   const [mainsRef, mainsInView, mainsTab] = useInView({ threshold: 0 });
-
-  const [
-    modalWithIngredientDetailsVisible,
-    setModalWithIngredientDetailsVisible,
-  ] = React.useState(false);
 
   const buns = burgerIngredients.filter(
     (ingredient) => ingredient.type === "bun"
@@ -82,7 +75,6 @@ export default function BurgerIngredients() {
           </h2>
           <IngredientsCategory
             ingredients={buns}
-            setVisible={setModalWithIngredientDetailsVisible}
           />
         </li>
         <li>
@@ -91,7 +83,6 @@ export default function BurgerIngredients() {
           </h2>
           <IngredientsCategory
             ingredients={sauces}
-            setVisible={setModalWithIngredientDetailsVisible}
           />
         </li>
         <li>
@@ -100,21 +91,9 @@ export default function BurgerIngredients() {
           </h2>
           <IngredientsCategory
             ingredients={mains}
-            setVisible={setModalWithIngredientDetailsVisible}
           />
         </li>
       </ul>
-      <div className="modal">
-        {modalWithIngredientDetailsVisible && (
-          <Modal
-            header="Детали ингредиента"
-            boxStyles="pt-10 pr-10 pb-15 pl-10"
-            setVisible={setModalWithIngredientDetailsVisible}
-          >
-            <IngredientDetails />
-          </Modal>
-        )}
-      </div>
     </section>
   );
 }
