@@ -50,7 +50,7 @@ export const ProfilePage = () => {
       evt.preventDefault();
       dispatch(updateUser(getUpdatedValue(form, user)));
     },
-    [dispatch, form]
+    [dispatch, form, user]
   );
 
   const getUpdatedValue = (obj1, obj2) => {

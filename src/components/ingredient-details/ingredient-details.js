@@ -22,7 +22,7 @@ export default function IngredientDetails({ inModal }) {
     if (burgerIngredients.length === 0) {
       dispatch(getIngredients());
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={!inModal ? ingredientDetailsStyles.withoutModal : ""}>

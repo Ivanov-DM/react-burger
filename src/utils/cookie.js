@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+
 export function getCookie(name) {
   const matches = document.cookie.match(
     new RegExp(

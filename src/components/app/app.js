@@ -28,7 +28,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(checkUserAuth());
-  }, []);
+  }, [dispatch]);
 
   const handleModalClose = () => {
     navigate(-1);
