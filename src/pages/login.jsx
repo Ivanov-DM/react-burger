@@ -26,9 +26,7 @@ export const LoginPage = () => {
     const login = useCallback(
         evt => {
             evt.preventDefault();
-            console.log(form)
             dispatch(signIn(form))
-            console.log('SignIn from login page')
         }, [dispatch, form]
     );
 
@@ -51,7 +49,7 @@ export const LoginPage = () => {
                             name={'password'}
                         />
                         <Button
-                            htmlType="button"
+                            htmlType="submit"
                             type="primary"
                             size="medium"
                             onClick={login}

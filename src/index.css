@@ -15,7 +15,7 @@ code {
 .page {
   margin: 0 auto;
   min-width: 320px;
-  max-width: 1920px;
+  max-width: 1240px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,25 +29,4 @@ code {
 p {
   margin: 0;
   padding: 0;
-}
-
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid #FFF;
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  display: block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-  margin: auto;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }

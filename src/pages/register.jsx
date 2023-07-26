@@ -1,6 +1,5 @@
 import React, {useCallback, useState} from "react";
 import {useNavigate} from "react-router";
-import AppHeader from "../components/app-header/app-header";
 import {
     EmailInput,
     PasswordInput,
@@ -62,7 +61,7 @@ export const RegisterPage = () => {
                             name={'password'}
                         />
                         <Button
-                            htmlType="button"
+                            htmlType="submit"
                             type="primary"
                             size="medium"
                             onClick={register}

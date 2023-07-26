@@ -5,7 +5,7 @@ function checkResponse(res) {
   if (res.ok) {
     return res.json();
   }
-  return Promise.reject(`Ошибка ${res.status}`);
+  return res.json().then(err => Promise.reject(err));
 }
 
 function request(url, options) {
@@ -13,16 +13,16 @@ function request(url, options) {
 }
 
 export const createOrderRequest = (ingredientsId) =>
-  request(`${BURGER_API_URL}/orders`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: 'Bearer ' + getCookie('accessToken')
-    },
-    body: JSON.stringify({
-      ingredients: ingredientsId,
-    }),
-  });
+    fetchWithRefresh(`${BURGER_API_URL}/orders`, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: 'Bearer ' + getCookie('accessToken')
+        },
+        body: JSON.stringify({
+            ingredients: ingredientsId
+        })
+    });
 
 export const getIngredientsRequest = () =>
   request(`${BURGER_API_URL}/ingredients`);
@@ -53,16 +53,17 @@ export const registerRequest = ({email, password, name}) =>
     });
 
 export const getUserRequest = () =>
-    request(`${BURGER_API_URL}/auth/user`, {
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: 'Bearer ' + getCookie('accessToken')
-        },
-    });
+    fetchWithRefresh(`${BURGER_API_URL}/auth/user`, {
+    method: 'GET',
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: 'Bearer ' + getCookie('accessToken')
+    },
+});
+
 
 export const updateUserRequest = (data) =>
-    request(`${BURGER_API_URL}/auth/user`, {
+    fetchWithRefresh(`${BURGER_API_URL}/auth/user`, {
         method: 'PATCH',
         headers: {
             "Content-Type": "application/json",
@@ -71,8 +72,7 @@ export const updateUserRequest = (data) =>
         body: JSON.stringify({
             ...data
         })
-    });
-
+    })
 
 export const forgotPasswordRequest = (email) =>
     request(`${BURGER_API_URL}/password-reset`, {
@@ -117,9 +117,10 @@ export const fetchWithRefresh = async (url, options) => {
             if (!refreshData.success) {
                 return Promise.reject(refreshData);
             }
+            const accessToken = refreshData.accessToken.split('Bearer ')[1] || '';
             setCookie('refreshToken', refreshData.refreshToken);
-            setCookie('accessToken', refreshData.accessToken);
-            options.headers.autorization = refreshData.accessToken;
+            setCookie('accessToken', accessToken);
+            options.headers.Authorization = refreshData.accessToken;
             return await request(url, options);
         } else {
             return Promise.reject(err);

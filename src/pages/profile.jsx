@@ -7,12 +7,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {updateUser} from "../services/actions/auth";
+import Loader from "../components/loader/loader";
 
 export const ProfilePage = () => {
     const dispatch = useDispatch();
     const getUserData = (store) => store.userData.user;
-    const [isVisible, setIsVisible] = useState(false);
     const user = useSelector(getUserData);
+    const [isVisible, setIsVisible] = useState(false);
     const initialFormState = {email: user.email, password: '', name: user.name};
     const [form, setValue] = useState(initialFormState);
 
@@ -66,69 +67,60 @@ export const ProfilePage = () => {
         return res
     }
 
-    // if (updateUserRequest) {
-    //     return (
-    //         <>
-    //             <div className="page">
-    //                 <span className="loader"></span>
-    //             </div>
-    //         </>
-    //     );
-    // }
-
     return (
-        <form className={styles.form}>
-            <Input
-                type={'text'}
-                placeholder={'Имя'}
-                onChange={onChange}
-                icon="EditIcon"
-                value={form.name}
-                name={'name'}
-                error={false}
-                errorText={'Ошибка'}
-                size={'default'}
-                extraClass="mb-6"
-            />
-            <Input
-                type={'email'}
-                placeholder={'Логин'}
-                onChange={onChange}
-                icon="EditIcon"
-                value={form.email}
-                name={'email'}
-                error={false}
-                errorText={'Ошибка'}
-                size={'default'}
-                extraClass="mb-6"
-            />
-            <PasswordInput
-                onChange={onChange}
-                value={form.password}
-                name={'password'}
-                icon="EditIcon"
-                extraClass="mb-6"
-            />
-            <div className={`${styles.buttonContainer} ${isVisible ? styles.buttonContainer_visible : ''}`}>
-                <Button
-                    htmlType="button"
-                    type="secondary"
-                    size="medium"
-                    extraClass={styles.cancelButton}
-                    onClick={resetForm}
-                >
-                    Отменить
-                </Button>
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    size="medium"
-                    extraClass={styles.link}
-                    onClick={updateUserData}
-                >
-                    Сохранить
-                </Button>
-            </div>
-        </form>
+        updateUserRequest
+            ? <Loader/>
+            : (<form className={styles.form}>
+                <Input
+                    type={'text'}
+                    placeholder={'Имя'}
+                    onChange={onChange}
+                    icon="EditIcon"
+                    value={form.name}
+                    name={'name'}
+                    error={false}
+                    errorText={'Ошибка'}
+                    size={'default'}
+                    extraClass="mb-6"
+                />
+                <Input
+                    type={'email'}
+                    placeholder={'Логин'}
+                    onChange={onChange}
+                    icon="EditIcon"
+                    value={form.email}
+                    name={'email'}
+                    error={false}
+                    errorText={'Ошибка'}
+                    size={'default'}
+                    extraClass="mb-6"
+                />
+                <PasswordInput
+                    onChange={onChange}
+                    value={form.password}
+                    name={'password'}
+                    icon="EditIcon"
+                    extraClass="mb-6"
+                />
+                <div className={`${styles.buttonContainer} ${isVisible ? styles.buttonContainer_visible : ''}`}>
+                    <Button
+                        htmlType="button"
+                        type="secondary"
+                        size="medium"
+                        extraClass={styles.cancelButton}
+                        onClick={resetForm}
+                    >
+                        Отменить
+                    </Button>
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        size="medium"
+                        onClick={updateUserData}
+                    >
+                        Сохранить
+                    </Button>
+                </div>
+            </form>)
     );
 }

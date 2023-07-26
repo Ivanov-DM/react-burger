@@ -18,8 +18,12 @@ export const NotFound404 = () => {
         <>
             <div className={styles.stars}>
                 <div className={styles.centralBody}>
-                    <p className={`${styles.text404} text text_type_main-large mb-10`}>404</p>
-                    <p className="text text_type_main-medium mb-20">УПС, ПОХОЖЕ ВАС УНЕСЛО В ОТКРЫТЫЙ КОСМОС</p>
+                    <p className={`${styles.text404} text text_type_main-large mb-10`}>
+                        404
+                    </p>
+                    <p className="text text_type_main-medium mb-20">
+                        УПС, ПОХОЖЕ ВАС УНЕСЛО В ОТКРЫТЫЙ КОСМОС
+                    </p>
                     <Button
                         htmlType="button"
                         type="primary"
@@ -31,13 +35,29 @@ export const NotFound404 = () => {
                 </div>
 
                 <div className={styles.objects}>
-                    <img className={styles.objectRocket} src={rocketImg} width="80px"/>
+                    <img
+                        className={styles.objectRocket}
+                        src={rocketImg}
+                        width="80px"
+                    />
                         <div className={styles.earthMoon}>
-                            <img className={styles.objectEarth} src={earthImg} width="160px"/>
-                                <img className={styles.objectMoon} src={moonImg} width="100px"/>
+                            <img
+                                className={styles.objectEarth}
+                                src={earthImg}
+                                width="160px"
+                            />
+                                <img
+                                    className={styles.objectMoon}
+                                    src={moonImg}
+                                    width="100px"
+                                />
                         </div>
                         <div className={styles.boxAstronaut}>
-                            <img className={styles.objectAstronaut} src={astronautImg} width="180px"/>
+                            <img
+                                className={styles.objectAstronaut}
+                                src={astronautImg}
+                                width="180px"
+                            />
                         </div>
                 </div>
                 <div className={styles.glowingStars}>

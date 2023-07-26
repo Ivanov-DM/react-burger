@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router";
 import {
     EmailInput,
@@ -10,7 +10,7 @@ import {forgotPasswordRequest} from "../utils/burger-api";
 
 export const ForgotPasswordPage = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = React.useState('');
+    const [email, setEmail] = useState('');
 
     const handleClick = (path) => {
         navigate(path, {replace: true});
