@@ -11,10 +11,7 @@ export default function IngredientsCategory(props) {
     <ul className={ingredientsCategoryStyle.ingredients}>
       {ingredients.map((ingredient, idx) => {
         return (
-          <li
-            className={ingredientsCategoryStyle.ingredient}
-            key={idx}
-          >
+          <li className={ingredientsCategoryStyle.ingredient} key={idx}>
             <BurgerIngredient ingredient={ingredient} />
           </li>
         );

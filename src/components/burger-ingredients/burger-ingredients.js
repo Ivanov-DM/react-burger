@@ -73,25 +73,19 @@ export default function BurgerIngredients() {
           <h2 className="text text_type_main-medium mt-10 mb-6" ref={bunsRef}>
             Булки
           </h2>
-          <IngredientsCategory
-            ingredients={buns}
-          />
+          <IngredientsCategory ingredients={buns} />
         </li>
         <li>
           <h2 className="text text_type_main-medium mt-10 mb-6" ref={saucesRef}>
             Соусы
           </h2>
-          <IngredientsCategory
-            ingredients={sauces}
-          />
+          <IngredientsCategory ingredients={sauces} />
         </li>
         <li>
           <h2 className="text text_type_main-medium mt-10 mb-6" ref={mainsRef}>
             Начинки
           </h2>
-          <IngredientsCategory
-            ingredients={mains}
-          />
+          <IngredientsCategory ingredients={mains} />
         </li>
       </ul>
     </section>

@@ -6,14 +6,14 @@ import BurgerConstructor from "../components/burger-constructor/burger-construct
 import styles from "./home.module.css";
 
 export function HomePage() {
-    return (
-        <div className="page">
-            <main className={styles.main_content}>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients />
-                    <BurgerConstructor />
-                </DndProvider>
-            </main>
-        </div>
-    )
+  return (
+    <div className="page">
+      <main className={styles.main_content}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
+      </main>
+    </div>
+  );
 }

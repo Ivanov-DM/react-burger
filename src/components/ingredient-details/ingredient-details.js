@@ -1,11 +1,11 @@
 import ingredientDetailsStyles from "./ingredient-details.module.css";
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router";
-import {getIngredients} from "../../services/actions/burger-ingredients";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { getIngredients } from "../../services/actions/burger-ingredients";
 import PropTypes from "prop-types";
 
-export default function IngredientDetails({inModal}) {
+export default function IngredientDetails({ inModal }) {
   const { ingredientId } = useParams();
   const dispatch = useDispatch();
   const getBurgerIngredients = (store) => store.burgerIngredients.ingredients;
@@ -13,7 +13,9 @@ export default function IngredientDetails({inModal}) {
   let ingredientDetails = {};
 
   if (burgerIngredients.length !== 0) {
-    ingredientDetails = burgerIngredients.find(ingredient => ingredient._id === ingredientId);
+    ingredientDetails = burgerIngredients.find(
+      (ingredient) => ingredient._id === ingredientId
+    );
   }
 
   useEffect(() => {
@@ -23,8 +25,10 @@ export default function IngredientDetails({inModal}) {
   }, []);
 
   return (
-    <div className={!inModal ? ingredientDetailsStyles.withoutModal : ''}>
-      {!inModal ? <h1 className="text text_type_main-large">Детали ингредиента</h1> : null}
+    <div className={!inModal ? ingredientDetailsStyles.withoutModal : ""}>
+      {!inModal ? (
+        <h1 className="text text_type_main-large">Детали ингредиента</h1>
+      ) : null}
       <img
         className={ingredientDetailsStyles.image}
         src={ingredientDetails.image}
@@ -74,5 +78,5 @@ export default function IngredientDetails({inModal}) {
 }
 
 IngredientDetails.propTypes = {
-  inModal: PropTypes.bool.isRequired
-}
+  inModal: PropTypes.bool.isRequired,
+};

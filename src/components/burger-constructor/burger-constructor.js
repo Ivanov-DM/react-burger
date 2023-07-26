@@ -21,14 +21,13 @@ import {
 import { createOrder } from "../../services/actions/order-details";
 import SortedElement from "../sorted-element/sorted-element";
 import { v4 as uuidv4 } from "uuid";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 import Loader from "../loader/loader";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [inModal, setInModal] =
-    React.useState(false);
+  const [inModal, setInModal] = React.useState(false);
 
   const getStateForBurgerConstructor = (store) => {
     return {
@@ -40,12 +39,8 @@ export default function BurgerConstructor() {
     };
   };
 
-  const {
-    constructorIngredients,
-    orderSuccess,
-    orderError,
-    totalPrice
-  } = useSelector(getStateForBurgerConstructor);
+  const { constructorIngredients, orderSuccess, orderError, totalPrice } =
+    useSelector(getStateForBurgerConstructor);
 
   const getUserData = (store) => store.userData.user;
   const user = useSelector(getUserData);
@@ -86,7 +81,7 @@ export default function BurgerConstructor() {
 
   const submitOrder = () => {
     if (!user) {
-      navigate('/login')
+      navigate("/login");
       return;
     }
     if (!bun || sauceAndMain.length === 0) {
@@ -102,7 +97,7 @@ export default function BurgerConstructor() {
 
   const modalOnClose = () => {
     setInModal(false);
-  }
+  };
 
   return (
     <section
@@ -172,21 +167,23 @@ export default function BurgerConstructor() {
             boxStyles="pt-15 pr-10 pb-30 pl-10"
             onClose={modalOnClose}
           >
-            {orderSuccess
-                ? <OrderDetails />
-                : orderError
-                    ? (<>
-                        <p className="text text_type_main-large text_color_error pt-20 pb-20">
-                          Что-то пошло не так...
-                        </p>
-                        <p className="text text_type_main-medium pb-5">
-                          К сожалению мы не получили ваш заказ,
-                        </p>
-                        <p className="text text_type_main-medium pb-20">
-                          попробуйте оформить его снова
-                        </p>
-                      </>)
-                    : <Loader />}
+            {orderSuccess ? (
+              <OrderDetails />
+            ) : orderError ? (
+              <>
+                <p className="text text_type_main-large text_color_error pt-20 pb-20">
+                  Что-то пошло не так...
+                </p>
+                <p className="text text_type_main-medium pb-5">
+                  К сожалению мы не получили ваш заказ,
+                </p>
+                <p className="text text_type_main-medium pb-20">
+                  попробуйте оформить его снова
+                </p>
+              </>
+            ) : (
+              <Loader />
+            )}
           </Modal>
         )}
       </div>

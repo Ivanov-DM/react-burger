@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 const modalRoot = document.getElementById("modals");
 
 const Modal = ({ children, header, boxStyles, onClose }) => {
-
   const closeByEscape = (evt) => {
     if (evt.key === "Escape") {
       closeModal();
