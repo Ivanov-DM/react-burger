@@ -1,20 +1,18 @@
 import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 import {
-  EmailInput,
   PasswordInput,
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./page.module.css";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../services/actions/auth";
+import styles from "../login/page.module.css";
+import { Navigate } from "react-router-dom";
+import { resetPasswordRequest } from "../../utils/burger-api";
 
-export const RegisterPage = () => {
-  const dispatch = useDispatch();
-  const [form, setValue] = useState({ email: "", password: "", name: "" });
+export const ResetPasswordPage = () => {
   const navigate = useNavigate();
+  const [form, setValue] = useState({ password: "", token: "" });
 
   const handleClick = (path) => {
     navigate(path, { replace: true });
@@ -24,56 +22,59 @@ export const RegisterPage = () => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const register = useCallback(
+  const resetPassword = useCallback(
     (evt) => {
       evt.preventDefault();
-      dispatch(registerUser(form));
+      resetPasswordRequest(form).then((res) => {
+        if (res.success) {
+          localStorage.removeItem("resetPasswordSuccess");
+          navigate("/login", { replace: true });
+        }
+      });
     },
-    [dispatch, form]
+    [form]
   );
+
+  if (!localStorage.getItem("resetPasswordSuccess")) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <>
       <div className="page">
         <div className={styles.container}>
-          <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
-          <form className={styles.form}>
-            <Input
-              type={"text"}
-              placeholder={"Имя"}
-              onChange={onChange}
-              value={form.name}
-              name={"name"}
-              error={false}
-              errorText={"Ошибка"}
-              size={"default"}
-              extraClass="mb-6"
-            />
-            <EmailInput
-              onChange={onChange}
-              value={form.email}
-              name={"email"}
-              isIcon={false}
-              extraClass="mb-6"
-            />
+          <h1 className="text text_type_main-medium mb-6">
+            Восстановление пароля
+          </h1>
+          <form className={styles.form} onSubmit={resetPassword}>
             <PasswordInput
               onChange={onChange}
               value={form.password}
-              name={"password"}
+              name="password"
+              extraClass="mb-6"
+            />
+            <Input
+              type="text"
+              placeholder="Введите код из письма"
+              onChange={onChange}
+              value={form.token}
+              name="token"
+              error={false}
+              errorText="Ошибка"
+              size="default"
             />
             <Button
               htmlType="submit"
               type="primary"
               size="medium"
-              onClick={register}
               extraClass="mt-6"
             >
-              Зарегистрироваться
+              Сохранить
             </Button>
           </form>
           <div className={styles.pageLink}>
             <p className="text text_type_main-default text_color_inactive pb-4">
-              Уже зарегистрированы?
+              Вспомнили пароль?
             </p>
             <Button
               htmlType="button"

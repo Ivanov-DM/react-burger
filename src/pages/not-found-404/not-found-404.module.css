@@ -163,7 +163,7 @@
 
 .stars {
   background-size: contain;
-  background: url(../images/overlay_stars.svg) repeat left top;
+  background: url(../../images/overlay_stars.svg) repeat left top;
 }
 
 .glowingStars .star {

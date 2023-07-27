@@ -8,7 +8,7 @@ import {
 
 import styles from "./page.module.css";
 import { useDispatch } from "react-redux";
-import { signIn } from "../services/actions/auth";
+import { signIn } from "../../services/actions/auth";
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -36,24 +36,23 @@ export const LoginPage = () => {
       <div className="page">
         <div className={styles.container}>
           <h1 className="text text_type_main-medium mb-6">Вход</h1>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={login}>
             <EmailInput
               onChange={onChange}
               value={form.email}
-              name={"email"}
+              name="email"
               isIcon={false}
               extraClass="mb-6"
             />
             <PasswordInput
               onChange={onChange}
               value={form.password}
-              name={"password"}
+              name="password"
             />
             <Button
               htmlType="submit"
               type="primary"
               size="medium"
-              onClick={login}
               extraClass="mt-6"
             >
               Вход

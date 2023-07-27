@@ -6,9 +6,12 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import appHeaderStyles from "./app-header.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { getClasses } from "../../utils/utils";
 
 export default function AppHeader() {
+  const location = useLocation();
+
   return (
     <header className={appHeaderStyles.header}>
       <div className={appHeaderStyles.header_content}>
@@ -17,36 +20,48 @@ export default function AppHeader() {
             className={`${appHeaderStyles.header_link} p-4`}
             to={{ pathname: `/` }}
           >
-            {({ isActive }) => (
-              <>
-                <BurgerIcon type={isActive ? "primary" : "secondary"} />
-                <p
-                  className={`text_type_main-default ml-2 ${
-                    isActive ? "text_color_primary" : "text_color_inactive"
-                  }`}
-                >
-                  Конструктор
-                </p>
-              </>
-            )}
+            <>
+              <BurgerIcon
+                type={getClasses({
+                  primary: location.pathname === "/",
+                  secondary: location.pathname !== "/",
+                })}
+              />
+              <p
+                className={getClasses({
+                  "text_type_main-default": true,
+                  "ml-2": true,
+                  text_color_primary: location.pathname === "/",
+                  text_color_inactive: location.pathname !== "/",
+                })}
+              >
+                Конструктор
+              </p>
+            </>
           </NavLink>
 
           <NavLink
             className={`${appHeaderStyles.header_link} p-4`}
             to={{ pathname: `/orders` }}
           >
-            {({ isActive }) => (
-              <>
-                <ListIcon type={isActive ? "primary" : "secondary"} />
-                <p
-                  className={`text_type_main-default ml-2 ${
-                    isActive ? "text_color_primary" : "text_color_inactive"
-                  }`}
-                >
-                  Лента заказов
-                </p>
-              </>
-            )}
+            <>
+              <ListIcon
+                type={getClasses({
+                  primary: location.pathname === "/orders",
+                  secondary: location.pathname !== "/orders",
+                })}
+              />
+              <p
+                className={getClasses({
+                  "text_type_main-default": true,
+                  "ml-2": true,
+                  text_color_primary: location.pathname === "/orders",
+                  text_color_inactive: location.pathname !== "/orders",
+                })}
+              >
+                Лента заказов
+              </p>
+            </>
           </NavLink>
         </nav>
 
@@ -56,18 +71,24 @@ export default function AppHeader() {
           className={`${appHeaderStyles.header_link} p-4`}
           to={{ pathname: `/profile` }}
         >
-          {({ isActive }) => (
-            <>
-              <ProfileIcon type={isActive ? "primary" : "secondary"} />
-              <p
-                className={`text_type_main-default ml-2 ${
-                  isActive ? "text_color_primary" : "text_color_inactive"
-                }`}
-              >
-                Личный кабинет
-              </p>
-            </>
-          )}
+          <>
+            <ProfileIcon
+              type={getClasses({
+                primary: location.pathname === "/profile",
+                secondary: location.pathname !== "/profile",
+              })}
+            />
+            <p
+              className={getClasses({
+                "text_type_main-default": true,
+                "ml-2": true,
+                text_color_primary: location.pathname === "/profile",
+                text_color_inactive: location.pathname !== "/profile",
+              })}
+            >
+              Личный кабинет
+            </p>
+          </>
         </NavLink>
       </div>
     </header>

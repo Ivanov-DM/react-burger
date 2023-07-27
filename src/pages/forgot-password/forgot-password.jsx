@@ -5,8 +5,8 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./page.module.css";
-import { forgotPasswordRequest } from "../utils/burger-api";
+import styles from "../login/page.module.css";
+import { forgotPasswordRequest } from "../../utils/burger-api";
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
@@ -39,18 +39,17 @@ export const ForgotPasswordPage = () => {
           <h1 className="text text_type_main-medium mb-6">
             Восстановление пароля
           </h1>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit={reset}>
             <EmailInput
               onChange={onChange}
               value={email}
-              name={"Укажите email"}
+              name="Укажите email"
               isIcon={false}
             />
             <Button
               htmlType="submit"
               type="primary"
               size="medium"
-              onClick={reset}
               extraClass="mt-6"
             >
               Восстановить

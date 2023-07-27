@@ -6,8 +6,8 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../services/actions/auth";
-import Loader from "../components/loader/loader";
+import { updateUser } from "../../services/actions/auth";
+import Loader from "../../components/loader/loader";
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -70,38 +70,40 @@ export const ProfilePage = () => {
     return res;
   };
 
-  return updateUserRequest ? (
-    <Loader />
-  ) : (
-    <form className={styles.form}>
+  if (updateUserRequest) {
+    return <Loader />;
+  }
+
+  return (
+    <form className={styles.form} onSubmit={updateUserData}>
       <Input
-        type={"text"}
-        placeholder={"Имя"}
+        type="text"
+        placeholder="Имя"
         onChange={onChange}
         icon="EditIcon"
         value={form.name}
-        name={"name"}
+        name="name"
         error={false}
-        errorText={"Ошибка"}
-        size={"default"}
+        errorText="Ошибка"
+        size="default"
         extraClass="mb-6"
       />
       <Input
-        type={"email"}
-        placeholder={"Логин"}
+        type="email"
+        placeholder="Логин"
         onChange={onChange}
         icon="EditIcon"
         value={form.email}
-        name={"email"}
+        name="email"
         error={false}
-        errorText={"Ошибка"}
-        size={"default"}
+        errorText="Ошибка"
+        size="default"
         extraClass="mb-6"
       />
       <PasswordInput
         onChange={onChange}
         value={form.password}
-        name={"password"}
+        name="password"
         icon="EditIcon"
         extraClass="mb-6"
       />
@@ -119,12 +121,7 @@ export const ProfilePage = () => {
         >
           Отменить
         </Button>
-        <Button
-          htmlType="submit"
-          type="primary"
-          size="medium"
-          onClick={updateUserData}
-        >
+        <Button htmlType="submit" type="primary" size="medium">
           Сохранить
         </Button>
       </div>
