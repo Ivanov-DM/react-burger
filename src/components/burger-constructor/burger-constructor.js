@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -21,24 +21,29 @@ import {
 import { createOrder } from "../../services/actions/order-details";
 import SortedElement from "../sorted-element/sorted-element";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router";
+import Loader from "../loader/loader";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
-  const [modalWithOrderDetailsVisible, setModalWithOrderDetailsVisible] =
-    React.useState(false);
+  const navigate = useNavigate();
+  const [inModal, setInModal] = React.useState(false);
 
   const getStateForBurgerConstructor = (store) => {
     return {
       constructorIngredients:
         store.constructorIngredients.constructorIngredients,
-      orderDetails: store.orderDetails.orderDetails,
+      orderSuccess: store.orderDetails.orderSuccess,
+      orderError: store.orderDetails.orderError,
       totalPrice: store.constructorIngredients.totalPrice,
     };
   };
 
-  const { constructorIngredients, orderDetails, totalPrice } = useSelector(
-    getStateForBurgerConstructor
-  );
+  const { constructorIngredients, orderSuccess, orderError, totalPrice } =
+    useSelector(getStateForBurgerConstructor);
+
+  const getUserData = (store) => store.userData.user;
+  const user = useSelector(getUserData);
 
   const [bun] = constructorIngredients.bun;
   const sauceAndMain = constructorIngredients.fillings;
@@ -75,6 +80,10 @@ export default function BurgerConstructor() {
   };
 
   const submitOrder = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
     if (!bun || sauceAndMain.length === 0) {
       return;
     }
@@ -83,13 +92,12 @@ export default function BurgerConstructor() {
       ...sauceAndMain.map((ingredient) => ingredient._id),
     ];
     dispatch(createOrder(ingredientsId));
+    setInModal(true);
   };
 
-  useEffect(() => {
-    if (orderDetails !== null) {
-      setModalWithOrderDetailsVisible(true);
-    }
-  }, [orderDetails]);
+  const modalOnClose = () => {
+    setInModal(false);
+  };
 
   return (
     <section
@@ -153,13 +161,29 @@ export default function BurgerConstructor() {
         </Button>
       </div>
       <div className="modal">
-        {modalWithOrderDetailsVisible && (
+        {inModal && (
           <Modal
             header=""
             boxStyles="pt-15 pr-10 pb-30 pl-10"
-            setVisible={setModalWithOrderDetailsVisible}
+            onClose={modalOnClose}
           >
-            <OrderDetails />
+            {orderSuccess ? (
+              <OrderDetails />
+            ) : orderError ? (
+              <>
+                <p className="text text_type_main-large text_color_error pt-20 pb-20">
+                  Что-то пошло не так...
+                </p>
+                <p className="text text_type_main-medium pb-5">
+                  К сожалению мы не получили ваш заказ,
+                </p>
+                <p className="text text_type_main-medium pb-20">
+                  попробуйте оформить его снова
+                </p>
+              </>
+            ) : (
+              <Loader />
+            )}
           </Modal>
         )}
       </div>

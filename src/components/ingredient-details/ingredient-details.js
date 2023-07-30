@@ -1,14 +1,34 @@
 import ingredientDetailsStyles from "./ingredient-details.module.css";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { getIngredients } from "../../services/actions/burger-ingredients";
+import PropTypes from "prop-types";
 
-export default function IngredientDetails() {
-  const getIngredientDetails = (store) =>
-    store.ingredientDetails.ingredientDetails;
-  const ingredientDetails = useSelector(getIngredientDetails);
+export default function IngredientDetails({ inModal }) {
+  const { ingredientId } = useParams();
+  const dispatch = useDispatch();
+  const getBurgerIngredients = (store) => store.burgerIngredients.ingredients;
+  const burgerIngredients = useSelector(getBurgerIngredients);
+  let ingredientDetails = {};
+
+  if (burgerIngredients.length !== 0) {
+    ingredientDetails = burgerIngredients.find(
+      (ingredient) => ingredient._id === ingredientId
+    );
+  }
+
+  useEffect(() => {
+    if (burgerIngredients.length === 0) {
+      dispatch(getIngredients());
+    }
+  }, [dispatch]);
 
   return (
-    <>
+    <div className={!inModal ? ingredientDetailsStyles.withoutModal : ""}>
+      {!inModal ? (
+        <h1 className="text text_type_main-large">Детали ингредиента</h1>
+      ) : null}
       <img
         className={ingredientDetailsStyles.image}
         src={ingredientDetails.image}
@@ -53,6 +73,10 @@ export default function IngredientDetails() {
           </p>
         </li>
       </ul>
-    </>
+    </div>
   );
 }
+
+IngredientDetails.propTypes = {
+  inModal: PropTypes.bool.isRequired,
+};

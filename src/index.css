@@ -15,7 +15,7 @@ code {
 .page {
   margin: 0 auto;
   min-width: 320px;
-  max-width: 1920px;
+  max-width: 1240px;
   display: flex;
   flex-direction: column;
   align-items: center;
