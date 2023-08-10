@@ -7,10 +7,10 @@ export const FEED_ORDERS_WS_MESSAGE = "FEED_ORDERS_WS_MESSAGE";
 export const FEED_ORDERS_WS_ERROR = "FEED_ORDERS_WS_ERROR";
 
 export const connectFeedOrders = (url) => ({
-    type: FEED_ORDERS_CONNECT,
-    payload: url,
+  type: FEED_ORDERS_CONNECT,
+  payload: url,
 });
 
 export const disconnectFeedOrders = () => ({
-    type: FEED_ORDERS_DISCONNECT,
+  type: FEED_ORDERS_DISCONNECT,
 });

@@ -90,7 +90,7 @@ export default function BurgerConstructor() {
     const ingredientsId = [
       bun._id,
       ...sauceAndMain.map((ingredient) => ingredient._id),
-      bun._id
+      bun._id,
     ];
     dispatch(createOrder(ingredientsId));
     setInModal(true);

@@ -1,4 +1,4 @@
-import {createOrderRequest, getOrderRequest} from "../../utils/burger-api";
+import { createOrderRequest, getOrderRequest } from "../../utils/burger-api";
 import { RESET_INGREDIENTS } from "./burger-constructor";
 
 export const CREATE_ORDER_REQUEST = "CREATE_ORDER_REQUEST";
@@ -43,22 +43,22 @@ export function getOrder(orderNumber) {
       type: GET_ORDER_REQUEST,
     });
     getOrderRequest(orderNumber)
-        .then((res) => {
-          if (res && res.success) {
-            dispatch({
-              type: GET_ORDER_SUCCESS,
-              payload: res.orders[0],
-            });
-          } else {
-            dispatch({
-              type: GET_ORDER_ERROR,
-            });
-          }
-        })
-        .catch(() => {
+      .then((res) => {
+        if (res && res.success) {
+          dispatch({
+            type: GET_ORDER_SUCCESS,
+            payload: res.orders[0],
+          });
+        } else {
           dispatch({
             type: GET_ORDER_ERROR,
           });
+        }
+      })
+      .catch(() => {
+        dispatch({
+          type: GET_ORDER_ERROR,
         });
+      });
   };
 }

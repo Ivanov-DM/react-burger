@@ -7,10 +7,10 @@ export const PROFILE_ORDERS_WS_MESSAGE = "PROFILE_ORDERS_WS_MESSAGE";
 export const PROFILE_ORDERS_WS_ERROR = "PROFILE_ORDERS_WS_ERROR";
 
 export const connectProfileOrders = (url) => ({
-    type: PROFILE_ORDERS_CONNECT,
-    payload: url,
+  type: PROFILE_ORDERS_CONNECT,
+  payload: url,
 });
 
 export const disconnectProfileOrders = () => ({
-    type: PROFILE_ORDERS_DISCONNECT,
+  type: PROFILE_ORDERS_DISCONNECT,
 });

@@ -1,4 +1,4 @@
-import PropTypes, {string} from "prop-types";
+import PropTypes, { string } from "prop-types";
 
 export const ingredientProptypes = PropTypes.shape({
   _id: PropTypes.string.isRequired,
@@ -23,4 +23,4 @@ export const orderProptypes = PropTypes.shape({
   status: PropTypes.string.isRequired,
   updatedAt: PropTypes.string.isRequired,
   _id: PropTypes.string.isRequired,
-})
+});

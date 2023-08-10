@@ -1,59 +1,59 @@
 .mainContainer {
-    max-width: 1240px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0 auto;
+  max-width: 1240px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .orderInfo {
-    display: flex;
-    column-gap: 60px;
+  display: flex;
+  column-gap: 60px;
 }
 
 .statsContainer {
-    display: flex;
-    flex-direction: column;
-    row-gap: 60px;
-    justify-content: flex-start;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 60px;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .ordersBoard {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    justify-items: start;
-    grid-template-areas:
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-items: start;
+  grid-template-areas:
     "done inWork"
     "doneList inWorkList";
-    column-gap: 36px
+  column-gap: 36px;
 }
 
 .doneOrdersTitle {
-    grid-area: done;
+  grid-area: done;
 }
 
 .inWorkOrdersTitle {
-    grid-area: inWork;
+  grid-area: inWork;
 }
 
 .doneOderList {
-    grid-area: doneList;
+  grid-area: doneList;
 }
 
 .inWorkOrderList {
-    grid-area: inWorkList;
+  grid-area: inWorkList;
 }
 
 .orderNumberList {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    max-height: 340px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    row-gap: 8px;
-    column-gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 340px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  column-gap: 4px;
 }

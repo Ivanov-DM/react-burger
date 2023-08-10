@@ -21,5 +21,5 @@ export {
   OrdersPage,
   UserPage,
   FeedPage,
-  OrderInfoPage
+  OrderInfoPage,
 };
