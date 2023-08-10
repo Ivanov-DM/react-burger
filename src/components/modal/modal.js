@@ -28,7 +28,7 @@ const Modal = ({ children, header, boxStyles, onClose }) => {
       <ModalOverlay closeModal={closeModal} />
       <div className={`${modalStyles.container} ${boxStyles}`}>
         <div className={modalStyles.header}>
-          <h3 className="text text_type_main-large"> {header} </h3>
+          <h3 className={`text ${/\d/.test(header)? "text_type_digits-default" : "text_type_main-large"}`}> {header} </h3>
           <button className={modalStyles.header__button} onClick={closeModal}>
             <CloseIcon type="primary" />
           </button>

@@ -4,7 +4,7 @@ import doneIconPath from "../../images/done-icon.svg";
 import { useSelector } from "react-redux";
 
 const OrderDetails = () => {
-  const getOrderDetails = (store) => store.orderDetails.orderDetails;
+  const getOrderDetails = (store) => store.orderData.orderDetails;
   const orderDetails = useSelector(getOrderDetails);
 
   return (

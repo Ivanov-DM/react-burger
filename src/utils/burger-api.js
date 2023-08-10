@@ -24,6 +24,9 @@ export const createOrderRequest = (ingredientsId) =>
     }),
   });
 
+export const getOrderRequest = (orderNumber) =>
+    request(`${BURGER_API_URL}/orders/${orderNumber}`);
+
 export const getIngredientsRequest = () =>
   request(`${BURGER_API_URL}/ingredients`);
 

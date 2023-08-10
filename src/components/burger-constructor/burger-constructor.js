@@ -18,7 +18,7 @@ import {
   INC_INGREDIENT_COUNT,
   SUB_PRICE,
 } from "../../services/actions/burger-constructor";
-import { createOrder } from "../../services/actions/order-details";
+import { createOrder } from "../../services/actions/order";
 import SortedElement from "../sorted-element/sorted-element";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router";
@@ -33,8 +33,8 @@ export default function BurgerConstructor() {
     return {
       constructorIngredients:
         store.constructorIngredients.constructorIngredients,
-      orderSuccess: store.orderDetails.orderSuccess,
-      orderError: store.orderDetails.orderError,
+      orderSuccess: store.orderData.orderSuccess,
+      orderError: store.orderData.orderError,
       totalPrice: store.constructorIngredients.totalPrice,
     };
   };
@@ -90,6 +90,7 @@ export default function BurgerConstructor() {
     const ingredientsId = [
       bun._id,
       ...sauceAndMain.map((ingredient) => ingredient._id),
+      bun._id
     ];
     dispatch(createOrder(ingredientsId));
     setInModal(true);

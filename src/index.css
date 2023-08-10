@@ -30,3 +30,7 @@ p {
   margin: 0;
   padding: 0;
 }
+
+.loaderContainer {
+  margin: 0 auto;
+}
