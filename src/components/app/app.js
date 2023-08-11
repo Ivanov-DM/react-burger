@@ -56,7 +56,7 @@ export default function App() {
         </Route>
         <Route
           path="/profile/orders/:id"
-          element={<OrderInfoPage inModal={false} />}
+          element={<OnlyAuth component={<OrderInfoPage inModal={false} />} />}
         />
         <Route
           path="/login"
