@@ -1,30 +1,30 @@
 import { useSelector } from "react-redux";
-import React from "react";
+import React, {useMemo} from "react";
 import styles from "./feed.module.css";
 import { Orders } from "../../components/orders/orders";
 
 export const FeedPage = () => {
-  const getOrdersData = (store) => store.feedOrders;
-  const { ordersData } = useSelector(getOrdersData);
+  const getOrdersData = (store) => store.feedOrders.ordersData;
+  const ordersData = useSelector(getOrdersData);
 
-  let doneOrderList;
-  let inWorkOrderList;
+  const doneOrderList = useMemo(() => {
+    if (ordersData) {
+      return ordersData.orders.filter((order) => order.status === "done");
+    }
+  }, [ordersData]);
 
-  if (ordersData) {
-    doneOrderList = ordersData.orders.filter(
-      (order) => order.status === "done"
-    );
-    inWorkOrderList = ordersData.orders.filter(
-      (order) => order.status === "pending"
-    );
-  }
+  const inWorkOrderList = useMemo(() => {
+    if (ordersData) {
+      return ordersData.orders.filter((order) => order.status === "pending");
+    }
+  }, [ordersData]);
 
   return (
     <main className={styles.mainContainer}>
       <h2 className="text text_type_main-large mt-10 mb-5">Лента заказов</h2>
       <div className={styles.orderInfo}>
         <Orders />
-        {ordersData ? (
+        {ordersData && (
           <div className={styles.statsContainer}>
             <div className={styles.ordersBoard}>
               <h2
@@ -78,7 +78,7 @@ export const FeedPage = () => {
               </p>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </main>
   );

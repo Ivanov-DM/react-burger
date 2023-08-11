@@ -23,7 +23,6 @@ export const OrderCard = ({ orderData, ingredients }) => {
 
   return (
     <Link
-      key={orderData.number}
       to={`${orderData.number}`}
       state={{ background: location }}
       className={styles.link}

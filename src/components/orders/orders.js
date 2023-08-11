@@ -78,11 +78,10 @@ export const Orders = () => {
   return (
     <div className={styles.container}>
       <ul className={styles.ordersList}>
-        {orders.map((order, idx) => {
+        {orders.map((order) => {
           return (
-            <li key={idx}>
+            <li key={order.number}>
               <OrderCard
-                key={idx}
                 orderData={order}
                 ingredients={burgerIngredients}
               />

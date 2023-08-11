@@ -39,28 +39,12 @@ export default function App() {
   return (
     <>
       <AppHeader />
-      <Routes
-        location={
-          location.pathname.includes("ingredients") ? background : location
-        }
-      >
+      <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
         <Route path="/feed" element={<FeedPage />} />
         <Route
-          path="/feed/:id"
-          element={
-            background ? (
-              <OrderInfoPage inModal={false} />
-            ) : (
-              <Modal
-                header={`#${location.pathname.replace(/\D/g, "")}`}
-                boxStyles="pt-10 pr-10 pb-15 pl-10"
-                onClose={handleModalClose}
-              >
-                <OrderInfoPage inModal={true} />
-              </Modal>
-            )
-          }
+            path="/feed/:id"
+            element={<OrderInfoPage inModal={false} />}
         />
         <Route
           path="/ingredients/:ingredientId"
@@ -75,19 +59,7 @@ export default function App() {
         </Route>
         <Route
           path="/profile/orders/:id"
-          element={
-            background ? (
-              <OrderInfoPage inModal={false} />
-            ) : (
-              <Modal
-                header={location.pathname.replace(/\D/g, "")}
-                boxStyles="pt-10 pr-10 pb-15 pl-10"
-                onClose={handleModalClose}
-              >
-                <OnlyAuth component={<OrderInfoPage inModal={true} />} />
-              </Modal>
-            )
-          }
+          element={<OrderInfoPage inModal={false} />}
         />
         <Route
           path="/login"
@@ -121,6 +93,30 @@ export default function App() {
                 <IngredientDetails inModal={true} />
               </Modal>
             }
+          />
+          <Route
+              path="/feed/:id"
+              element={
+                    <Modal
+                        header={`#${location.pathname.replace(/\D/g, "")}`}
+                        boxStyles="pt-10 pr-10 pb-15 pl-10"
+                        onClose={handleModalClose}
+                    >
+                      <OrderInfoPage inModal={true} />
+                    </Modal>
+              }
+          />
+          <Route
+              path="/profile/orders/:id"
+              element={
+                    <Modal
+                        header={location.pathname.replace(/\D/g, "")}
+                        boxStyles="pt-10 pr-10 pb-15 pl-10"
+                        onClose={handleModalClose}
+                    >
+                      <OnlyAuth component={<OrderInfoPage inModal={true} />} />
+                    </Modal>
+              }
           />
         </Routes>
       )}
