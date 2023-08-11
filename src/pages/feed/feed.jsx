@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import styles from "./feed.module.css";
 import { Orders } from "../../components/orders/orders";
 

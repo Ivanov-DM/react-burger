@@ -51,5 +51,7 @@ export const getFormattedDate = (dateFromServer) => {
 
 export const getTimeZone = (dateFromServer) => {
   const timeZoneOffset = new Date(dateFromServer).getTimezoneOffset() / 60;
-  return timeZoneOffset > 0 ? `GMT-${Math.abs(timeZoneOffset)}` : `GMT+${Math.abs(timeZoneOffset)}`;
+  return timeZoneOffset > 0
+    ? `GMT-${Math.abs(timeZoneOffset)}`
+    : `GMT+${Math.abs(timeZoneOffset)}`;
 };

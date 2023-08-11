@@ -42,10 +42,7 @@ export default function App() {
       <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
         <Route path="/feed" element={<FeedPage />} />
-        <Route
-            path="/feed/:id"
-            element={<OrderInfoPage inModal={false} />}
-        />
+        <Route path="/feed/:id" element={<OrderInfoPage inModal={false} />} />
         <Route
           path="/ingredients/:ingredientId"
           element={<IngredientDetails inModal={false} />}
@@ -95,28 +92,28 @@ export default function App() {
             }
           />
           <Route
-              path="/feed/:id"
-              element={
-                    <Modal
-                        header={`#${location.pathname.replace(/\D/g, "")}`}
-                        boxStyles="pt-10 pr-10 pb-15 pl-10"
-                        onClose={handleModalClose}
-                    >
-                      <OrderInfoPage inModal={true} />
-                    </Modal>
-              }
+            path="/feed/:id"
+            element={
+              <Modal
+                header={`#${location.pathname.replace(/\D/g, "")}`}
+                boxStyles="pt-10 pr-10 pb-15 pl-10"
+                onClose={handleModalClose}
+              >
+                <OrderInfoPage inModal={true} />
+              </Modal>
+            }
           />
           <Route
-              path="/profile/orders/:id"
-              element={
-                    <Modal
-                        header={location.pathname.replace(/\D/g, "")}
-                        boxStyles="pt-10 pr-10 pb-15 pl-10"
-                        onClose={handleModalClose}
-                    >
-                      <OnlyAuth component={<OrderInfoPage inModal={true} />} />
-                    </Modal>
-              }
+            path="/profile/orders/:id"
+            element={
+              <Modal
+                header={location.pathname.replace(/\D/g, "")}
+                boxStyles="pt-10 pr-10 pb-15 pl-10"
+                onClose={handleModalClose}
+              >
+                <OnlyAuth component={<OrderInfoPage inModal={true} />} />
+              </Modal>
+            }
           />
         </Routes>
       )}

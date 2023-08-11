@@ -81,10 +81,7 @@ export const Orders = () => {
         {orders.map((order) => {
           return (
             <li key={order.number}>
-              <OrderCard
-                orderData={order}
-                ingredients={burgerIngredients}
-              />
+              <OrderCard orderData={order} ingredients={burgerIngredients} />
             </li>
           );
         })}
