@@ -11,6 +11,8 @@ import {
   NotFound404,
   OrdersPage,
   UserPage,
+  FeedPage,
+  OrderInfoPage,
 } from "../../pages";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import { useNavigate } from "react-router";
@@ -39,6 +41,8 @@ export default function App() {
       <AppHeader />
       <Routes location={background || location}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:id" element={<OrderInfoPage inModal={false} />} />
         <Route
           path="/ingredients/:ingredientId"
           element={<IngredientDetails inModal={false} />}
@@ -50,6 +54,10 @@ export default function App() {
             element={<OnlyAuth component={<OrdersPage />} />}
           />
         </Route>
+        <Route
+          path="/profile/orders/:id"
+          element={<OnlyAuth component={<OrderInfoPage inModal={false} />} />}
+        />
         <Route
           path="/login"
           element={<OnlyUnAuth component={<LoginPage />} />}
@@ -68,6 +76,7 @@ export default function App() {
         />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
+
       {background && (
         <Routes>
           <Route
@@ -79,6 +88,30 @@ export default function App() {
                 onClose={handleModalClose}
               >
                 <IngredientDetails inModal={true} />
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal
+                header={`#${location.pathname.replace(/\D/g, "")}`}
+                boxStyles="pt-10 pr-10 pb-15 pl-10"
+                onClose={handleModalClose}
+              >
+                <OrderInfoPage inModal={true} />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal
+                header={location.pathname.replace(/\D/g, "")}
+                boxStyles="pt-10 pr-10 pb-15 pl-10"
+                onClose={handleModalClose}
+              >
+                <OnlyAuth component={<OrderInfoPage inModal={true} />} />
               </Modal>
             }
           />

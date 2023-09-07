@@ -42,21 +42,21 @@ export default function AppHeader() {
 
           <NavLink
             className={`${appHeaderStyles.header_link} p-4`}
-            to={{ pathname: `/orders` }}
+            to={{ pathname: `/feed` }}
           >
             <>
               <ListIcon
                 type={getClasses({
-                  primary: location.pathname === "/orders",
-                  secondary: location.pathname !== "/orders",
+                  primary: location.pathname === "/feed",
+                  secondary: location.pathname !== "/feed",
                 })}
               />
               <p
                 className={getClasses({
                   "text_type_main-default": true,
                   "ml-2": true,
-                  text_color_primary: location.pathname === "/orders",
-                  text_color_inactive: location.pathname !== "/orders",
+                  text_color_primary: location.pathname === "/feed",
+                  text_color_inactive: location.pathname !== "/feed",
                 })}
               >
                 Лента заказов
