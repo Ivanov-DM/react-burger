@@ -2,7 +2,15 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_ERROR,
   GET_INGREDIENTS_SUCCESS,
-} from "../actions/burger-ingredients";
+} from "../constants/burger-ingredients";
+import {TIngredientData} from "../types/data";
+import {TBurgerIngredientsActions} from "../actions/burger-ingredients";
+
+type TBurgerIngredientsState = {
+  ingredients: ReadonlyArray<TIngredientData>;
+  ingredientsRequest: boolean;
+  ingredientsError: boolean;
+}
 
 let initialState = {
   ingredients: [],
@@ -10,7 +18,7 @@ let initialState = {
   ingredientsError: false,
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state: TBurgerIngredientsState = initialState, action: TBurgerIngredientsActions) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

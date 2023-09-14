@@ -16,9 +16,26 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
-} from "../actions/auth";
+} from "../constants/auth";
+import {TAuthActions} from "../actions/auth";
+import {TUserResponseData} from "../types/data";
 
-const authInitialState = {
+export type TAuthState = {
+  user: TUserResponseData | null,
+  isAuthChecked: boolean,
+  registerRequest: boolean,
+  registerError: boolean,
+  signInRequest: boolean,
+  signInError: boolean,
+  getUserRequest: boolean,
+  getUserError: boolean,
+  updateUserRequest: boolean,
+  updateUserError: boolean,
+  signOutRequest: boolean,
+  signOutError: boolean,
+}
+
+const authInitialState: TAuthState = {
   user: null,
   isAuthChecked: false,
   registerRequest: false,
@@ -33,7 +50,7 @@ const authInitialState = {
   signOutError: false,
 };
 
-export function authReducer(state = authInitialState, action) {
+export function authReducer(state = authInitialState, action: TAuthActions) {
   switch (action.type) {
     case SET_AUTH_CHECKED: {
       return {

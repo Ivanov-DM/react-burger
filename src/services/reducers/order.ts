@@ -5,11 +5,13 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_ERROR,
-} from "../actions/order";
+} from "../constants/order";
+import {TOrderData} from "../types/data";
+import {TOrderActions} from "../actions/order";
 
-const orderInitialState = {
-  order: null,
-  orderDetails: null,
+const orderInitialState: TOrderState = {
+  orderByNumber: null,
+  createdOrder: null,
   orderRequest: false,
   orderError: false,
   orderSuccess: false,
@@ -18,7 +20,18 @@ const orderInitialState = {
   getOrderSuccess: false,
 };
 
-export const orderReducer = (state = orderInitialState, action) => {
+export type TOrderState = {
+  orderByNumber: TOrderData | null;
+  createdOrder: TOrderData | null;
+  orderRequest: boolean,
+  orderError: boolean,
+  orderSuccess: boolean,
+  getOrderRequest: boolean,
+  getOrderError: boolean,
+  getOrderSuccess: boolean,
+}
+
+export const orderReducer = (state = orderInitialState, action: TOrderActions) => {
   switch (action.type) {
     case CREATE_ORDER_REQUEST: {
       return {
@@ -31,7 +44,7 @@ export const orderReducer = (state = orderInitialState, action) => {
       return {
         ...state,
         orderRequest: false,
-        orderDetails: action.orderDetails,
+        createdOrder: action.createdOrder,
         orderError: false,
         orderSuccess: true,
       };
@@ -39,7 +52,7 @@ export const orderReducer = (state = orderInitialState, action) => {
     case CREATE_ORDER_ERROR: {
       return {
         ...state,
-        orderDetails: null,
+        createdOrder: null,
         orderRequest: false,
         orderError: true,
         orderSuccess: false,
@@ -56,7 +69,7 @@ export const orderReducer = (state = orderInitialState, action) => {
       return {
         ...state,
         getOrderRequest: false,
-        order: action.payload,
+        orderByNumber: action.orderByNumber,
         getOrderError: false,
         getOrderSuccess: true,
       };
@@ -64,7 +77,7 @@ export const orderReducer = (state = orderInitialState, action) => {
     case GET_ORDER_ERROR: {
       return {
         ...state,
-        order: null,
+        orderByNumber: null,
         getOrderRequest: false,
         getOrderError: true,
         getOrderSuccess: false,

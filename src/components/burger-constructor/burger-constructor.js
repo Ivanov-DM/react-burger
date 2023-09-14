@@ -11,12 +11,12 @@ import OrderDetails from "../order-details/order-details";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  ADD_INGREDIENT,
-  ADD_PRICE,
-  DEC_INGREDIENT_COUNT,
-  DELETE_INGREDIENT,
-  INC_INGREDIENT_COUNT,
-  SUB_PRICE,
+  addIngredientAction,
+  addPriceAction,
+  decIngredientAction,
+  deleteIngredientAction,
+  incIngredientAction,
+  subPriceAction
 } from "../../services/actions/burger-constructor";
 import { createOrder } from "../../services/actions/order";
 import SortedElement from "../sorted-element/sorted-element";
@@ -56,27 +56,24 @@ export default function BurgerConstructor() {
       }
       const constructorIngredient = Object.assign({}, item);
       constructorIngredient.uuid = uuidv4();
-      dispatch({ type: ADD_INGREDIENT, ingredient: constructorIngredient });
-      dispatch({
-        type: INC_INGREDIENT_COUNT,
-        ingredientId: constructorIngredient._id,
-      });
+      dispatch(addIngredientAction(constructorIngredient));
+      dispatch(incIngredientAction(constructorIngredient._id));
       if (constructorIngredient.type !== "bun") {
-        dispatch({ type: ADD_PRICE, price: constructorIngredient.price });
+        dispatch(addPriceAction(constructorIngredient.price));
       } else if (bun && constructorIngredient.type === "bun") {
-        dispatch({ type: SUB_PRICE, price: bun.price * 2 });
-        dispatch({ type: ADD_PRICE, price: constructorIngredient.price * 2 });
-        dispatch({ type: DEC_INGREDIENT_COUNT, ingredientId: bun._id });
+        dispatch(subPriceAction(bun.price * 2));
+        dispatch(addPriceAction(constructorIngredient.price * 2));
+        dispatch(decIngredientAction(bun._id));
       } else {
-        dispatch({ type: ADD_PRICE, price: constructorIngredient.price * 2 });
+        dispatch(addPriceAction(constructorIngredient.price * 2));
       }
     },
   });
 
   const handleCloseBtn = (item, idx) => {
-    dispatch({ type: DELETE_INGREDIENT, index: idx });
-    dispatch({ type: SUB_PRICE, price: item.price });
-    dispatch({ type: DEC_INGREDIENT_COUNT, ingredientId: item._id });
+    dispatch(deleteIngredientAction(idx));
+    dispatch(subPriceAction(item.price));
+    dispatch(decIngredientAction(item._id));
   };
 
   const submitOrder = () => {

@@ -2,7 +2,7 @@ import React, { useCallback, useRef } from "react";
 import sortedElementStyle from "./sorted-element.module.css";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { UPDATE_INGREDIENTS_ORDER } from "../../services/actions/burger-constructor";
+import {updateIngredientsAction} from "../../services/actions/burger-constructor";
 import PropTypes from "prop-types";
 
 const SortedElement = ({ children, index }) => {
@@ -14,7 +14,7 @@ const SortedElement = ({ children, index }) => {
 
   const updateIngredientsOrder = useCallback(
     (dragIndex, hoverIndex) => {
-      dispatch({ type: UPDATE_INGREDIENTS_ORDER, dragIndex, hoverIndex });
+      dispatch(updateIngredientsAction(dragIndex, hoverIndex));
     },
     [dispatch]
   );

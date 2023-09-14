@@ -47,7 +47,7 @@ export const OrderInfoPage = ({ inModal }) => {
         return order;
       }
     }
-    order = store.orderData.order;
+    order = store.orderData.orderByNumber;
     if (order) {
       return order;
     }

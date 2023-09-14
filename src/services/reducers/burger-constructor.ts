@@ -7,9 +7,22 @@ import {
   RESET_INGREDIENTS,
   SUB_PRICE,
   UPDATE_INGREDIENTS_ORDER,
-} from "../actions/burger-constructor";
+} from "../constants/burger-constructor";
+import {TBurgerConstructorActions} from "../actions/burger-constructor";
+import {TIngredientData} from "../types/data";
 
-const constructorInitialState = {
+export type TBurgerConstructorState = {
+  constructorIngredients: {
+    bun: ReadonlyArray<TIngredientData>;
+    fillings: Array<TIngredientData>;
+  };
+  ingredientsCount: {
+    [key: string]: number;
+  };
+  totalPrice: number;
+}
+
+const constructorInitialState: TBurgerConstructorState = {
   constructorIngredients: {
     bun: [],
     fillings: [],
@@ -20,7 +33,7 @@ const constructorInitialState = {
 
 export function burgerConstructorReducer(
   state = constructorInitialState,
-  action
+  action: TBurgerConstructorActions
 ) {
   switch (action.type) {
     case ADD_INGREDIENT: {
