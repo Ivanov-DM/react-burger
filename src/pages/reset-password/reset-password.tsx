@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useCallback, useState} from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { useNavigate } from "react-router";
 import {
   PasswordInput,

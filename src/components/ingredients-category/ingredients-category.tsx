@@ -1,7 +1,7 @@
 import React from "react";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import ingredientsCategoryStyle from "./ingredients-category.module.css";
-import {TIngredientData} from "../../services/types/data";
+import { TIngredientData } from "../../services/types/data";
 
 interface IIngredientsCategoryProps {
   ingredients: ReadonlyArray<TIngredientData>;

@@ -15,8 +15,8 @@ import {
   connectFeedOrders,
   disconnectFeedOrders,
 } from "../../services/actions/feed-orders";
-import {RootState} from "../../services/types";
-import {TGetOrdersResponse} from "../../services/types/data";
+import { RootState } from "../../services/types";
+import { TGetOrdersResponse } from "../../services/types/data";
 
 export const Orders = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,8 @@ export const Orders = () => {
     caseSensitive: true,
   });
 
-  const getBurgerIngredients = (store: RootState) => store.burgerIngredients.ingredients;
+  const getBurgerIngredients = (store: RootState) =>
+    store.burgerIngredients.ingredients;
   const burgerIngredients = useSelector(getBurgerIngredients);
 
   const getOrdersData = (store: RootState): TGetOrdersResponse | null => {

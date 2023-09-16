@@ -1,28 +1,30 @@
 import { BURGER_API_URL } from "./constants";
 import { getCookie, setCookie } from "./cookie";
 import {
-    TGetIngredientsResponse,
-    TRefreshData,
-    TCreateOrderResponse,
-    TGetOrderResponse, TAuthResponse, TUserRequestData
+  TGetIngredientsResponse,
+  TRefreshData,
+  TCreateOrderResponse,
+  TGetOrderResponse,
+  TAuthResponse,
+  TUserRequestData,
 } from "../services/types/data";
 
 type TApiOptions = {
-    method: string;
-    headers: HeadersInit;
-    body?: string
-}
+  method: string;
+  headers: HeadersInit;
+  body?: string;
+};
 
 const checkResponse = <T>(res: Response): Promise<T> | Error => {
   if (res.ok) {
     return res.json();
   }
   return res.json().then((err) => Promise.reject(err));
-}
+};
 
 const request = <T>(url: string, options?: TApiOptions) => {
   return fetch(url, options).then(checkResponse) as T;
-}
+};
 
 export const createOrderRequest = (ingredientsId: number) =>
   fetchWithRefresh<TCreateOrderResponse>(`${BURGER_API_URL}/orders`, {
@@ -37,7 +39,9 @@ export const createOrderRequest = (ingredientsId: number) =>
   });
 
 export const getOrderRequest = (orderNumber: string) =>
-  request<Promise<TGetOrderResponse>>(`${BURGER_API_URL}/orders/${orderNumber}`);
+  request<Promise<TGetOrderResponse>>(
+    `${BURGER_API_URL}/orders/${orderNumber}`
+  );
 
 export const getIngredientsRequest = () =>
   request<Promise<TGetIngredientsResponse>>(`${BURGER_API_URL}/ingredients`);
@@ -122,22 +126,26 @@ export const refreshToken = () =>
     }),
   });
 
-export const fetchWithRefresh = async <T>(url: string, options: TApiOptions) => {
+export const fetchWithRefresh = async <T>(
+  url: string,
+  options: TApiOptions
+) => {
   try {
-    return await request(url, options) as T;
+    return (await request(url, options)) as T;
   } catch (err: any) {
     if (err.message === "jwt expired" || err.message === "jwt malformed") {
-      const refreshData = await refreshToken() as TRefreshData;
+      const refreshData = (await refreshToken()) as TRefreshData;
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
       const accessToken = refreshData.accessToken.split("Bearer ")[1] || "";
       setCookie("refreshToken", refreshData.refreshToken);
       setCookie("accessToken", accessToken);
-        if (options.headers) {
-            (options.headers as {[key: string]: string}).Authorization = refreshData.accessToken;
-        }
-      return await request(url, options) as T;
+      if (options.headers) {
+        (options.headers as { [key: string]: string }).Authorization =
+          refreshData.accessToken;
+      }
+      return (await request(url, options)) as T;
     } else {
       return Promise.reject(err);
     }

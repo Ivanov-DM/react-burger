@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FormEvent, useCallback, useState} from "react";
+import React, { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import styles from "./profile.module.css";
 import {
   Button,
@@ -8,13 +8,13 @@ import {
 import { useDispatch, useSelector } from "../../services/types/hook";
 import { updateUser } from "../../services/actions/auth";
 import Loader from "../../components/loader/loader";
-import {RootState} from "../../services/types";
+import { RootState } from "../../services/types";
 
 type TFormUserData = {
   email: string;
   password: string;
   name: string;
-}
+};
 
 export const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -24,8 +24,8 @@ export const ProfilePage = () => {
   let initialFormState = {
     email: "",
     password: "",
-    name: ""
-  }
+    name: "",
+  };
   if (user) {
     initialFormState = { email: user.email, password: "", name: user.name };
   }
@@ -41,7 +41,11 @@ export const ProfilePage = () => {
       if (form.email === user.email && !form.password) {
         setIsVisible(false);
       }
-    } else if (user && e.target.name === "email" && e.target.value === user.email) {
+    } else if (
+      user &&
+      e.target.name === "email" &&
+      e.target.value === user.email
+    ) {
       if (form.name === user.name && !form.password) {
         setIsVisible(false);
       }
@@ -69,11 +73,14 @@ export const ProfilePage = () => {
     [dispatch, form, user]
   );
 
-  const getUpdatedValue = (obj1: {[key: string]: string}, obj2: {[key: string]: string}) => {
+  const getUpdatedValue = (
+    obj1: { [key: string]: string },
+    obj2: { [key: string]: string }
+  ) => {
     const res = Object.assign({}, obj1);
-    Object.keys(obj1).forEach((key ) => {
+    Object.keys(obj1).forEach((key) => {
       if (key === "password" && obj1[key] !== "") {
-          res[key] = obj1[key];
+        res[key] = obj1[key];
       } else {
         if (obj1[key] !== obj2[key]) {
           res[key] = obj1[key];

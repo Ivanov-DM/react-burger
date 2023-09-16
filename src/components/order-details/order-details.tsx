@@ -2,7 +2,7 @@ import React from "react";
 import orderDetailsStyles from "./order-details.module.css";
 import doneIconPath from "../../images/done-icon.svg";
 import { useSelector } from "../../services/types/hook";
-import {RootState} from "../../services/types";
+import { RootState } from "../../services/types";
 
 const OrderDetails = () => {
   const getOrderDetails = (store: RootState) => store.orderData.createdOrder;

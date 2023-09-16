@@ -3,16 +3,20 @@ import styles from "./order-info.module.css";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "../../services/types/hook";
 import Loader from "../../components/loader/loader";
-import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import {
   calculateTotalPrice,
   getIngredientsWithCount,
-  getTimeZone, TIngredientsWithCountObj,
+  getTimeZone,
+  TIngredientsWithCountObj,
 } from "../../utils/order";
 import { ORDER_STATUS } from "../../utils/constants";
 import { getOrder } from "../../services/actions/order";
-import {RootState} from "../../services/types";
+import { RootState } from "../../services/types";
 
 interface IOrderInfoPageProps {
   inModal: boolean;
@@ -20,7 +24,7 @@ interface IOrderInfoPageProps {
 
 type TIdParams = {
   id: string;
-}
+};
 
 export const OrderInfoPage = ({ inModal }: IOrderInfoPageProps) => {
   const { id } = useParams<TIdParams>();
@@ -30,7 +34,8 @@ export const OrderInfoPage = ({ inModal }: IOrderInfoPageProps) => {
   let formattedDate;
   let totalPrice;
 
-  const getBurgerIngredients = (store: RootState) => store.burgerIngredients.ingredients;
+  const getBurgerIngredients = (store: RootState) =>
+    store.burgerIngredients.ingredients;
   const burgerIngredients = useSelector(getBurgerIngredients);
   const getIngredientsRequest = (store: RootState) =>
     store.burgerIngredients.ingredientsRequest;
@@ -80,7 +85,7 @@ export const OrderInfoPage = ({ inModal }: IOrderInfoPageProps) => {
       burgerIngredients
     );
     timeZone = getTimeZone(order.updatedAt);
-    formattedDate = <FormattedDate date={new Date(order.updatedAt)}/>;
+    formattedDate = <FormattedDate date={new Date(order.updatedAt)} />;
     totalPrice = calculateTotalPrice(ingredientDataList);
     for (let key in ingredientDataList) {
       ingredientsWithCount.push(ingredientDataList[key]);

@@ -14,8 +14,10 @@ import {
   connectFeedOrders,
   disconnectFeedOrders,
   wsCloseFeedOrders,
-  wsConnectingFeedOrders, wsErrorFeedOrders, wsMessageFeedOrders,
-  wsOpenFeedOrders
+  wsConnectingFeedOrders,
+  wsErrorFeedOrders,
+  wsMessageFeedOrders,
+  wsOpenFeedOrders,
 } from "./actions/feed-orders";
 
 const feedOrdersMiddleware = socketMiddleware({

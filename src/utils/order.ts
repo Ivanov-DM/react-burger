@@ -1,25 +1,30 @@
-import {TIngredientData, TOrderData} from "../services/types/data";
+import { TIngredientData, TOrderData } from "../services/types/data";
 
 export type TIngredientsWithCountObj = {
   count: number;
   ingredient: TIngredientData;
-}
+};
 
 type TIngredientsWithCount = {
   [key: string]: TIngredientsWithCountObj;
-}
+};
 
 type TIngredientIconsData = {
   iconsSrc: Array<string>;
   moreCount: number;
-}
+};
 
-export const getIngredientsWithCount = (orderData: TOrderData, ingredients: ReadonlyArray<TIngredientData>): TIngredientsWithCount => {
+export const getIngredientsWithCount = (
+  orderData: TOrderData,
+  ingredients: ReadonlyArray<TIngredientData>
+): TIngredientsWithCount => {
   return orderData.ingredients.reduce((result, currentIngredientId) => {
     if (!result[currentIngredientId]) {
       result[currentIngredientId] = {
         count: 1,
-        ingredient: ingredients.find((item) => item._id === currentIngredientId) as TIngredientData,
+        ingredient: ingredients.find(
+          (item) => item._id === currentIngredientId
+        ) as TIngredientData,
       };
     } else {
       result[currentIngredientId] = {
@@ -41,7 +46,10 @@ export const calculateTotalPrice = (ingredientsData: TIngredientsWithCount) => {
   return totalSum;
 };
 
-export const getIngredientIcons = (ingredientData: TIngredientsWithCount, limit: number) => {
+export const getIngredientIcons = (
+  ingredientData: TIngredientsWithCount,
+  limit: number
+) => {
   let ingredientIconsData: TIngredientIconsData = {
     iconsSrc: [],
     moreCount: 0,

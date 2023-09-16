@@ -22,8 +22,8 @@ import { createOrder } from "../../services/actions/order";
 import SortedElement from "../sorted-element/sorted-element";
 import { useNavigate } from "react-router";
 import Loader from "../loader/loader";
-import {RootState} from "../../services/types";
-import {TIngredientData} from "../../services/types/data";
+import { RootState } from "../../services/types";
+import { TIngredientData } from "../../services/types/data";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export default function BurgerConstructor() {
   const getStateForBurgerConstructor = (store: RootState) => {
     return {
       constructorIngredients:
-      store.constructorIngredients.constructorIngredients,
+        store.constructorIngredients.constructorIngredients,
       orderSuccess: store.orderData.orderSuccess,
       orderError: store.orderData.orderError,
       totalPrice: store.constructorIngredients.totalPrice,
@@ -41,7 +41,7 @@ export default function BurgerConstructor() {
   };
 
   const { constructorIngredients, orderSuccess, orderError, totalPrice } =
-      useSelector(getStateForBurgerConstructor);
+    useSelector(getStateForBurgerConstructor);
 
   const getUserData = (store: RootState) => store.userData.user;
   const user = useSelector(getUserData);
@@ -97,93 +97,93 @@ export default function BurgerConstructor() {
   };
 
   return (
-      <section
-          className={`${burgerConstructorStyle.container} pt-25 pl-4`}
-          ref={dropTarget}
-      >
-        <div className={`${burgerConstructorStyle.ingredient} pl-8 pr-4`}>
-          {bun ? (
-              <ConstructorElement
-                  type="top"
-                  isLocked={true}
-                  text={bun.name}
-                  thumbnail={bun.image}
-                  price={bun.price}
-              />
-          ) : null}
-        </div>
-        <ul className={`${burgerConstructorStyle.ingredient_list} mt-4 mb-4`}>
-          {sauceAndMain.map((ingredient, idx) => {
-            return (
-                <SortedElement key={ingredient.uuid} index={idx}>
+    <section
+      className={`${burgerConstructorStyle.container} pt-25 pl-4`}
+      ref={dropTarget}
+    >
+      <div className={`${burgerConstructorStyle.ingredient} pl-8 pr-4`}>
+        {bun ? (
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={bun.name}
+            thumbnail={bun.image}
+            price={bun.price}
+          />
+        ) : null}
+      </div>
+      <ul className={`${burgerConstructorStyle.ingredient_list} mt-4 mb-4`}>
+        {sauceAndMain.map((ingredient, idx) => {
+          return (
+            <SortedElement key={ingredient.uuid} index={idx}>
               <span
-                  className={`${burgerConstructorStyle.ingredient_dragIcon} mr-2`}
+                className={`${burgerConstructorStyle.ingredient_dragIcon} mr-2`}
               >
                 <DragIcon type="primary" />
               </span>
-                  <ConstructorElement
-                      text={ingredient.name}
-                      thumbnail={ingredient.image}
-                      price={ingredient.price}
-                      handleClose={() => handleCloseBtn(ingredient, idx)}
-                  />
-                </SortedElement>
-            );
-          })}
-        </ul>
-        <div className={`${burgerConstructorStyle.ingredient} ml-8 mr-4`}>
-          {bun ? (
               <ConstructorElement
-                  type="bottom"
-                  isLocked={true}
-                  text={bun.name}
-                  thumbnail={bun.image}
-                  price={bun.price}
+                text={ingredient.name}
+                thumbnail={ingredient.image}
+                price={ingredient.price}
+                handleClose={() => handleCloseBtn(ingredient, idx)}
               />
-          ) : null}
-        </div>
-        <div className={`${burgerConstructorStyle.burgerInfo} mt-10 pr-4`}>
-          <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
-          <span className={burgerConstructorStyle.burgerInfo_priceIcon}>
+            </SortedElement>
+          );
+        })}
+      </ul>
+      <div className={`${burgerConstructorStyle.ingredient} ml-8 mr-4`}>
+        {bun ? (
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={bun.name}
+            thumbnail={bun.image}
+            price={bun.price}
+          />
+        ) : null}
+      </div>
+      <div className={`${burgerConstructorStyle.burgerInfo} mt-10 pr-4`}>
+        <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
+        <span className={burgerConstructorStyle.burgerInfo_priceIcon}>
           <CurrencyIcon type="primary" />
         </span>
-          <Button
-              htmlType="button"
-              type="primary"
-              size="medium"
-              extraClass="ml-10"
-              onClick={submitOrder}
+        <Button
+          htmlType="button"
+          type="primary"
+          size="medium"
+          extraClass="ml-10"
+          onClick={submitOrder}
+        >
+          Оформить заказ
+        </Button>
+      </div>
+      <div className="modal">
+        {inModal && (
+          <Modal
+            header=""
+            boxStyles="pt-15 pr-10 pb-30 pl-10"
+            onClose={modalOnClose}
           >
-            Оформить заказ
-          </Button>
-        </div>
-        <div className="modal">
-          {inModal && (
-              <Modal
-                  header=""
-                  boxStyles="pt-15 pr-10 pb-30 pl-10"
-                  onClose={modalOnClose}
-              >
-                {orderSuccess ? (
-                    <OrderDetails />
-                ) : orderError ? (
-                    <>
-                      <p className="text text_type_main-large text_color_error pt-20 pb-20">
-                        Что-то пошло не так...
-                      </p>
-                      <p className="text text_type_main-medium pb-5">
-                        К сожалению мы не получили ваш заказ,
-                      </p>
-                      <p className="text text_type_main-medium pb-20">
-                        попробуйте оформить его снова
-                      </p>
-                    </>
-                ) : (
-                    <Loader />
-                )}
-              </Modal>
-          )}
-        </div>
-      </section>
+            {orderSuccess ? (
+              <OrderDetails />
+            ) : orderError ? (
+              <>
+                <p className="text text_type_main-large text_color_error pt-20 pb-20">
+                  Что-то пошло не так...
+                </p>
+                <p className="text text_type_main-medium pb-5">
+                  К сожалению мы не получили ваш заказ,
+                </p>
+                <p className="text text_type_main-medium pb-20">
+                  попробуйте оформить его снова
+                </p>
+              </>
+            ) : (
+              <Loader />
+            )}
+          </Modal>
+        )}
+      </div>
+    </section>
   );
 }

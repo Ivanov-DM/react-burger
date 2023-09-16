@@ -1,5 +1,8 @@
 import styles from "./order-card.module.css";
-import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -9,7 +12,7 @@ import {
   getTimeZone,
 } from "../../utils/order";
 import { ORDER_STATUS } from "../../utils/constants";
-import {TIngredientData, TOrderData} from "../../services/types/data";
+import { TIngredientData, TOrderData } from "../../services/types/data";
 
 interface IOrderCardProps {
   orderData: TOrderData;
@@ -35,7 +38,7 @@ export const OrderCard = ({ orderData, ingredients }: IOrderCardProps) => {
             &#35;{orderData.number}
           </h2>
           <p className="text text_type_main-small text_color_inactive">
-            <FormattedDate date={new Date(orderData.updatedAt)}/> i-{timeZone}
+            <FormattedDate date={new Date(orderData.updatedAt)} /> i-{timeZone}
           </p>
         </div>
         <p className="text text_type_main-medium mb-2">{orderData.name}</p>

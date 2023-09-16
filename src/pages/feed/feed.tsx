@@ -2,7 +2,7 @@ import { useSelector } from "../../services/types/hook";
 import React, { useMemo } from "react";
 import styles from "./feed.module.css";
 import { Orders } from "../../components/orders/orders";
-import {RootState} from "../../services/types";
+import { RootState } from "../../services/types";
 
 export const FeedPage = () => {
   const getOrdersData = (store: RootState) => store.feedOrders.ordersData;

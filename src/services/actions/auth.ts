@@ -1,5 +1,11 @@
-import {getUserRequest, loginRequest, logoutRequest, registerRequest, updateUserRequest,} from "../../utils/burger-api";
-import {deleteCookie, getCookie, setCookie} from "../../utils/cookie";
+import {
+  getUserRequest,
+  loginRequest,
+  logoutRequest,
+  registerRequest,
+  updateUserRequest,
+} from "../../utils/burger-api";
+import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
 
 import {
   GET_USER_ERROR,
@@ -18,10 +24,10 @@ import {
   SIGN_OUT_SUCCESS,
   UPDATE_USER_ERROR,
   UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS
+  UPDATE_USER_SUCCESS,
 } from "../constants/auth";
-import {TUserResponseData} from "../types/data";
-import {AppDispatch, AppThunk} from "../types";
+import { TUserResponseData } from "../types/data";
+import { AppDispatch, AppThunk } from "../types";
 
 interface ISetAuthCheckedAction {
   readonly type: typeof SET_AUTH_CHECKED;
@@ -98,41 +104,47 @@ interface ISignOutUserErrorAction {
 }
 
 export type TAuthActions =
-    ISetAuthCheckedAction
-    | ISetUserAction
-    | IRegisterUserAction
-    | IRegisterUserSuccessAction
-    | IRegisterUserErrorAction
-    | IGetUserAction
-    | IGetUserSuccessAction
-    | IGetUserErrorAction
-    | IUpdateUserAction
-    | IUpdateUserSuccessAction
-    | IUpdateUserErrorAction
-    | ISignInUserAction
-    | ISignInUserSuccessAction
-    | ISignInUserErrorAction
-    | ISignOutUserAction
-    | ISignOutUserSuccessAction
-    | ISignOutUserErrorAction;
+  | ISetAuthCheckedAction
+  | ISetUserAction
+  | IRegisterUserAction
+  | IRegisterUserSuccessAction
+  | IRegisterUserErrorAction
+  | IGetUserAction
+  | IGetUserSuccessAction
+  | IGetUserErrorAction
+  | IUpdateUserAction
+  | IUpdateUserSuccessAction
+  | IUpdateUserErrorAction
+  | ISignInUserAction
+  | ISignInUserSuccessAction
+  | ISignInUserErrorAction
+  | ISignOutUserAction
+  | ISignOutUserSuccessAction
+  | ISignOutUserErrorAction;
 
-export const setAuthCheckedAction = (value: boolean): ISetAuthCheckedAction => ({
+export const setAuthCheckedAction = (
+  value: boolean
+): ISetAuthCheckedAction => ({
   type: SET_AUTH_CHECKED,
   payload: value,
 });
 
-export const setUserAction = (user: TUserResponseData | null): ISetUserAction => ({
+export const setUserAction = (
+  user: TUserResponseData | null
+): ISetUserAction => ({
   type: SET_USER,
   payload: user,
 });
 
 export const registerUserAction = (): IRegisterUserAction => ({
-  type: REGISTER_REQUEST
+  type: REGISTER_REQUEST,
 });
 
-export const registerUserSuccessAction = (userData: TUserResponseData): IRegisterUserSuccessAction => ({
+export const registerUserSuccessAction = (
+  userData: TUserResponseData
+): IRegisterUserSuccessAction => ({
   type: REGISTER_SUCCESS,
-  userData
+  userData,
 });
 
 export const registerUserErrorAction = (): IRegisterUserErrorAction => ({
@@ -140,12 +152,14 @@ export const registerUserErrorAction = (): IRegisterUserErrorAction => ({
 });
 
 export const getUserAction = (): IGetUserAction => ({
-  type: GET_USER_REQUEST
+  type: GET_USER_REQUEST,
 });
 
-export const getUserSuccessAction = (userData: TUserResponseData): IGetUserSuccessAction => ({
+export const getUserSuccessAction = (
+  userData: TUserResponseData
+): IGetUserSuccessAction => ({
   type: GET_USER_SUCCESS,
-  userData
+  userData,
 });
 
 export const getUserErrorAction = (): IGetUserErrorAction => ({
@@ -153,12 +167,14 @@ export const getUserErrorAction = (): IGetUserErrorAction => ({
 });
 
 export const updateUserAction = (): IUpdateUserAction => ({
-  type: UPDATE_USER_REQUEST
+  type: UPDATE_USER_REQUEST,
 });
 
-export const updateUserSuccessAction = (userData: TUserResponseData): IUpdateUserSuccessAction => ({
+export const updateUserSuccessAction = (
+  userData: TUserResponseData
+): IUpdateUserSuccessAction => ({
   type: UPDATE_USER_SUCCESS,
-  userData
+  userData,
 });
 
 export const updateUserErrorAction = (): IUpdateUserErrorAction => ({
@@ -166,12 +182,14 @@ export const updateUserErrorAction = (): IUpdateUserErrorAction => ({
 });
 
 export const sighInUserAction = (): ISignInUserAction => ({
-  type: SIGN_IN_REQUEST
+  type: SIGN_IN_REQUEST,
 });
 
-export const sighInUserSuccessAction = (userData: TUserResponseData): ISignInUserSuccessAction => ({
+export const sighInUserSuccessAction = (
+  userData: TUserResponseData
+): ISignInUserSuccessAction => ({
   type: SIGN_IN_SUCCESS,
-  userData
+  userData,
 });
 
 export const sighInUserErrorAction = (): ISignInUserErrorAction => ({
@@ -179,11 +197,11 @@ export const sighInUserErrorAction = (): ISignInUserErrorAction => ({
 });
 
 export const sighOutUserAction = (): ISignOutUserAction => ({
-  type: SIGN_OUT_REQUEST
+  type: SIGN_OUT_REQUEST,
 });
 
 export const sighOutUserSuccessAction = (): ISignOutUserSuccessAction => ({
-  type: SIGN_OUT_SUCCESS
+  type: SIGN_OUT_SUCCESS,
 });
 
 export const sighOutUserErrorAction = (): ISignOutUserErrorAction => ({
@@ -193,21 +211,22 @@ export const sighOutUserErrorAction = (): ISignOutUserErrorAction => ({
 export const registerUser: AppThunk = (userData) => (dispatch: AppDispatch) => {
   dispatch(registerUserAction());
   registerRequest(userData)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch(registerUserSuccessAction(res.user as TUserResponseData));
-        } else {
-          dispatch(registerUserErrorAction());
-        }
-      })
-      .catch(() => {
+    .then((res) => {
+      if (res && res.success) {
+        dispatch(registerUserSuccessAction(res.user as TUserResponseData));
+      } else {
         dispatch(registerUserErrorAction());
-      });
-}
+      }
+    })
+    .catch(() => {
+      dispatch(registerUserErrorAction());
+    });
+};
 
-export const getUser: AppThunk<Promise<unknown>> = () => (dispatch: AppDispatch) => {
-  dispatch(getUserAction());
-  return getUserRequest()
+export const getUser: AppThunk<Promise<unknown>> =
+  () => (dispatch: AppDispatch) => {
+    dispatch(getUserAction());
+    return getUserRequest()
       .then((res) => {
         if (res && res.success) {
           dispatch(getUserSuccessAction(res.user as TUserResponseData));
@@ -218,73 +237,73 @@ export const getUser: AppThunk<Promise<unknown>> = () => (dispatch: AppDispatch)
       .catch(() => {
         dispatch(getUserErrorAction());
       });
-}
+  };
 
 export const checkUserAuth: AppThunk = () => (dispatch: AppDispatch) => {
   if (getCookie("accessToken")) {
     dispatch(getUser())
-        .catch(() => {
-          deleteCookie("accessToken");
-          deleteCookie("refreshToken");
-          dispatch(setUserAction(null));
-        })
-        .finally(() => dispatch(setAuthCheckedAction(true)));
+      .catch(() => {
+        deleteCookie("accessToken");
+        deleteCookie("refreshToken");
+        dispatch(setUserAction(null));
+      })
+      .finally(() => dispatch(setAuthCheckedAction(true)));
   } else {
     dispatch(setAuthCheckedAction(true));
   }
 };
 
-export const updateUser: AppThunk = (data) => (dispatch: AppDispatch) =>  {
+export const updateUser: AppThunk = (data) => (dispatch: AppDispatch) => {
   dispatch(updateUserAction());
   return updateUserRequest(data)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch(updateUserSuccessAction(res.user as TUserResponseData));
-        } else {
-          dispatch(updateUserErrorAction());
-        }
-      })
-      .catch(() => {
+    .then((res) => {
+      if (res && res.success) {
+        dispatch(updateUserSuccessAction(res.user as TUserResponseData));
+      } else {
         dispatch(updateUserErrorAction());
-      });
-}
+      }
+    })
+    .catch(() => {
+      dispatch(updateUserErrorAction());
+    });
+};
 
 export const signIn: AppThunk = (userData) => (dispatch: AppDispatch) => {
   dispatch(sighInUserAction());
   loginRequest(userData)
-      .then((res) => {
-        if (res && res.success) {
-          const accessToken = res.accessToken!.split("Bearer ")[1] || "";
-          const refreshToken = res.refreshToken;
-          if (accessToken && refreshToken) {
-            setCookie("accessToken", accessToken);
-            setCookie("refreshToken", refreshToken);
-          }
-          dispatch(sighInUserSuccessAction(res.user as TUserResponseData));
-          dispatch(setAuthCheckedAction(true));
-        } else {
-          dispatch(sighInUserErrorAction());
+    .then((res) => {
+      if (res && res.success) {
+        const accessToken = res.accessToken!.split("Bearer ")[1] || "";
+        const refreshToken = res.refreshToken;
+        if (accessToken && refreshToken) {
+          setCookie("accessToken", accessToken);
+          setCookie("refreshToken", refreshToken);
         }
-      })
-      .catch(() => {
+        dispatch(sighInUserSuccessAction(res.user as TUserResponseData));
+        dispatch(setAuthCheckedAction(true));
+      } else {
         dispatch(sighInUserErrorAction());
-      });
-}
+      }
+    })
+    .catch(() => {
+      dispatch(sighInUserErrorAction());
+    });
+};
 
 export const signOut: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch(sighOutUserAction());
   logoutRequest()
-      .then((res) => {
-        if (res && res.success) {
-          deleteCookie("accessToken");
-          deleteCookie("refreshToken");
-          dispatch(sighOutUserSuccessAction());
-          dispatch(setUserAction(null));
-        } else {
-          dispatch(sighOutUserErrorAction());
-        }
-      })
-      .catch(() => {
+    .then((res) => {
+      if (res && res.success) {
+        deleteCookie("accessToken");
+        deleteCookie("refreshToken");
+        dispatch(sighOutUserSuccessAction());
+        dispatch(setUserAction(null));
+      } else {
         dispatch(sighOutUserErrorAction());
-      });
-}
+      }
+    })
+    .catch(() => {
+      dispatch(sighOutUserErrorAction());
+    });
+};

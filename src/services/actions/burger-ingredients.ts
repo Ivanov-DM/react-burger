@@ -1,11 +1,11 @@
-import {getIngredientsRequest} from "../../utils/burger-api";
+import { getIngredientsRequest } from "../../utils/burger-api";
 import {
-    GET_INGREDIENTS_ERROR,
-    GET_INGREDIENTS_REQUEST,
-    GET_INGREDIENTS_SUCCESS
+  GET_INGREDIENTS_ERROR,
+  GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_SUCCESS,
 } from "../constants/burger-ingredients";
-import {TIngredientData} from "../types/data";
-import {AppDispatch, AppThunk} from "../types";
+import { TIngredientData } from "../types/data";
+import { AppDispatch, AppThunk } from "../types";
 
 interface IGetIngredientsAction {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -24,9 +24,11 @@ export const getIngredientsAction = (): IGetIngredientsAction => ({
   type: GET_INGREDIENTS_REQUEST,
 });
 
-export const getIngredientsSuccessAction = (ingredients: ReadonlyArray<TIngredientData>): IGetIngredientsSuccessAction => ({
+export const getIngredientsSuccessAction = (
+  ingredients: ReadonlyArray<TIngredientData>
+): IGetIngredientsSuccessAction => ({
   type: GET_INGREDIENTS_SUCCESS,
-  ingredients
+  ingredients,
 });
 
 export const getIngredientsErrorAction = (): IGetIngredientsErrorAction => ({
@@ -34,21 +36,21 @@ export const getIngredientsErrorAction = (): IGetIngredientsErrorAction => ({
 });
 
 export type TBurgerIngredientsActions =
-    IGetIngredientsAction
-    | IGetIngredientsSuccessAction
-    | IGetIngredientsErrorAction;
+  | IGetIngredientsAction
+  | IGetIngredientsSuccessAction
+  | IGetIngredientsErrorAction;
 
 export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch(getIngredientsAction());
   getIngredientsRequest()
-      .then((res) => {
-        if (res && res.success) {
-          dispatch(getIngredientsSuccessAction(res.data));
-        } else {
-          dispatch(getIngredientsErrorAction());
-        }
-      })
-      .catch(() => {
+    .then((res) => {
+      if (res && res.success) {
+        dispatch(getIngredientsSuccessAction(res.data));
+      } else {
         dispatch(getIngredientsErrorAction());
-      });
-}
+      }
+    })
+    .catch(() => {
+      dispatch(getIngredientsErrorAction());
+    });
+};

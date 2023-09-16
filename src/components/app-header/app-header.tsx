@@ -9,7 +9,7 @@ import appHeaderStyles from "./app-header.module.css";
 import { NavLink, useLocation } from "react-router-dom";
 import { getClasses } from "../../utils/utils";
 
-type TIconTypes = 'primary' | 'secondary';
+type TIconTypes = "primary" | "secondary";
 
 export default function AppHeader() {
   const location = useLocation();
@@ -24,10 +24,12 @@ export default function AppHeader() {
           >
             <>
               <BurgerIcon
-                type={getClasses({
-                  primary: location.pathname === "/",
-                  secondary: location.pathname !== "/",
-                }) as TIconTypes}
+                type={
+                  getClasses({
+                    primary: location.pathname === "/",
+                    secondary: location.pathname !== "/",
+                  }) as TIconTypes
+                }
               />
               <p
                 className={getClasses({
@@ -48,10 +50,12 @@ export default function AppHeader() {
           >
             <>
               <ListIcon
-                type={getClasses({
-                  primary: location.pathname === "/feed",
-                  secondary: location.pathname !== "/feed",
-                }) as TIconTypes}
+                type={
+                  getClasses({
+                    primary: location.pathname === "/feed",
+                    secondary: location.pathname !== "/feed",
+                  }) as TIconTypes
+                }
               />
               <p
                 className={getClasses({
@@ -75,10 +79,12 @@ export default function AppHeader() {
         >
           <>
             <ProfileIcon
-              type={getClasses({
-                primary: location.pathname === "/profile",
-                secondary: location.pathname !== "/profile",
-              }) as TIconTypes}
+              type={
+                getClasses({
+                  primary: location.pathname === "/profile",
+                  secondary: location.pathname !== "/profile",
+                }) as TIconTypes
+              }
             />
             <p
               className={getClasses({

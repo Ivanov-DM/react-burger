@@ -8,8 +8,8 @@ import {
   SUB_PRICE,
   UPDATE_INGREDIENTS_ORDER,
 } from "../constants/burger-constructor";
-import {TBurgerConstructorActions} from "../actions/burger-constructor";
-import {TIngredientData} from "../types/data";
+import { TBurgerConstructorActions } from "../actions/burger-constructor";
+import { TIngredientData } from "../types/data";
 
 export type TBurgerConstructorState = {
   constructorIngredients: {
@@ -20,7 +20,7 @@ export type TBurgerConstructorState = {
     [key: string]: number;
   };
   totalPrice: number;
-}
+};
 
 const constructorInitialState: TBurgerConstructorState = {
   constructorIngredients: {
@@ -41,13 +41,13 @@ export function burgerConstructorReducer(
         ...state,
         constructorIngredients: {
           bun:
-              action.ingredient.type === "bun"
-                  ? [action.ingredient]
-                  : state.constructorIngredients.bun,
+            action.ingredient.type === "bun"
+              ? [action.ingredient]
+              : state.constructorIngredients.bun,
           fillings:
-              action.ingredient.type !== "bun"
-                  ? [...state.constructorIngredients.fillings, action.ingredient]
-                  : state.constructorIngredients.fillings,
+            action.ingredient.type !== "bun"
+              ? [...state.constructorIngredients.fillings, action.ingredient]
+              : state.constructorIngredients.fillings,
         },
       };
     }
@@ -88,17 +88,18 @@ export function burgerConstructorReducer(
           ...state,
           ingredientsCount: {
             ...state.ingredientsCount,
-            [action.ingredientId]: state.ingredientsCount[action.ingredientId] + 1,
-          }
-        }
+            [action.ingredientId]:
+              state.ingredientsCount[action.ingredientId] + 1,
+          },
+        };
       } else {
         return {
           ...state,
           ingredientsCount: {
             ...state.ingredientsCount,
             [action.ingredientId]: 1,
-          }
-        }
+          },
+        };
       }
     }
     case DEC_INGREDIENT_COUNT: {
@@ -107,23 +108,28 @@ export function burgerConstructorReducer(
           ...state,
           ingredientsCount: {
             ...state.ingredientsCount,
-            [action.ingredientId]: state.ingredientsCount[action.ingredientId] - 1,
-          }
-        }
+            [action.ingredientId]:
+              state.ingredientsCount[action.ingredientId] - 1,
+          },
+        };
       } else {
-        return {...state}
+        return { ...state };
       }
     }
     case UPDATE_INGREDIENTS_ORDER: {
       const ingredients = [...state.constructorIngredients.fillings];
-      ingredients.splice(action.hoverIndex, 0, ingredients.splice(action.dragIndex, 1)[0]);
+      ingredients.splice(
+        action.hoverIndex,
+        0,
+        ingredients.splice(action.dragIndex, 1)[0]
+      );
       return {
         ...state,
         constructorIngredients: {
           ...state.constructorIngredients,
-          fillings: ingredients
-        }
-      }
+          fillings: ingredients,
+        },
+      };
     }
     default:
       return state;

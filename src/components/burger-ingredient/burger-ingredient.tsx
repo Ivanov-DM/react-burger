@@ -7,11 +7,11 @@ import burgerIngredientStyles from "./burger-ingredient.module.css";
 import { useDrag } from "react-dnd";
 import { useSelector } from "../../services/types/hook";
 import { Link, useLocation } from "react-router-dom";
-import {RootState} from "../../services/types";
-import {TIngredientData} from "../../services/types/data";
+import { RootState } from "../../services/types";
+import { TIngredientData } from "../../services/types/data";
 
 interface IBurgerIngredientProps {
-  ingredient: TIngredientData
+  ingredient: TIngredientData;
 }
 
 export default function BurgerIngredient(props: IBurgerIngredientProps) {

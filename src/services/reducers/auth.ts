@@ -17,23 +17,23 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
 } from "../constants/auth";
-import {TAuthActions} from "../actions/auth";
-import {TUserResponseData} from "../types/data";
+import { TAuthActions } from "../actions/auth";
+import { TUserResponseData } from "../types/data";
 
 export type TAuthState = {
-  user: TUserResponseData | null,
-  isAuthChecked: boolean,
-  registerRequest: boolean,
-  registerError: boolean,
-  signInRequest: boolean,
-  signInError: boolean,
-  getUserRequest: boolean,
-  getUserError: boolean,
-  updateUserRequest: boolean,
-  updateUserError: boolean,
-  signOutRequest: boolean,
-  signOutError: boolean,
-}
+  user: TUserResponseData | null;
+  isAuthChecked: boolean;
+  registerRequest: boolean;
+  registerError: boolean;
+  signInRequest: boolean;
+  signInError: boolean;
+  getUserRequest: boolean;
+  getUserError: boolean;
+  updateUserRequest: boolean;
+  updateUserError: boolean;
+  signOutRequest: boolean;
+  signOutError: boolean;
+};
 
 const authInitialState: TAuthState = {
   user: null,

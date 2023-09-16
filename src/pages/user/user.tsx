@@ -1,4 +1,4 @@
-import React, {FormEvent, useCallback} from "react";
+import React, { FormEvent, useCallback } from "react";
 import styles from "./user.module.css";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "../../services/types/hook";
@@ -9,7 +9,7 @@ export const UserPage = () => {
   const dispatch = useDispatch();
   const signOutRequest = useSelector((store) => store.userData.signOutRequest);
   const location = useLocation();
-  const captionText: {[key: string]: string} = {
+  const captionText: { [key: string]: string } = {
     "/profile": "В этом разделе вы можете изменить свои персональные данные",
     "/profile/orders":
       "В этом разделе вы можете просмотреть свою историю заказов",

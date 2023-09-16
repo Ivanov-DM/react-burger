@@ -1,10 +1,10 @@
 import { useSelector } from "../../services/types/hook";
 import { Navigate, useLocation } from "react-router-dom";
-import {RootState} from "../../services/types";
+import { RootState } from "../../services/types";
 
 interface IProtectedProps {
   onlyUnAuth?: boolean;
-  component: JSX.Element
+  component: JSX.Element;
 }
 
 const Protected = ({ onlyUnAuth = false, component }: IProtectedProps) => {

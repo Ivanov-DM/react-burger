@@ -3,17 +3,20 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "../../services/types/hook";
 import { useParams } from "react-router";
 import { getIngredients } from "../../services/actions/burger-ingredients";
-import {RootState} from "../../services/types";
-import {TIngredientData} from "../../services/types/data";
+import { RootState } from "../../services/types";
+import { TIngredientData } from "../../services/types/data";
 
 interface IIngredientDetailsProps {
   inModal: boolean;
 }
 
-export default function IngredientDetails({ inModal }: IIngredientDetailsProps) {
+export default function IngredientDetails({
+  inModal,
+}: IIngredientDetailsProps) {
   const { ingredientId } = useParams();
   const dispatch = useDispatch();
-  const getBurgerIngredients = (store: RootState) => store.burgerIngredients.ingredients;
+  const getBurgerIngredients = (store: RootState) =>
+    store.burgerIngredients.ingredients;
   const burgerIngredients = useSelector(getBurgerIngredients);
   let ingredientDetails: TIngredientData | undefined;
 

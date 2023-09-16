@@ -6,8 +6,8 @@ import {
   GET_ORDER_SUCCESS,
   GET_ORDER_ERROR,
 } from "../constants/order";
-import {TOrderData} from "../types/data";
-import {TOrderActions} from "../actions/order";
+import { TOrderData } from "../types/data";
+import { TOrderActions } from "../actions/order";
 
 const orderInitialState: TOrderState = {
   orderByNumber: null,
@@ -23,15 +23,18 @@ const orderInitialState: TOrderState = {
 export type TOrderState = {
   orderByNumber: TOrderData | null;
   createdOrder: TOrderData | null;
-  orderRequest: boolean,
-  orderError: boolean,
-  orderSuccess: boolean,
-  getOrderRequest: boolean,
-  getOrderError: boolean,
-  getOrderSuccess: boolean,
-}
+  orderRequest: boolean;
+  orderError: boolean;
+  orderSuccess: boolean;
+  getOrderRequest: boolean;
+  getOrderError: boolean;
+  getOrderSuccess: boolean;
+};
 
-export const orderReducer = (state = orderInitialState, action: TOrderActions) => {
+export const orderReducer = (
+  state = orderInitialState,
+  action: TOrderActions
+) => {
   switch (action.type) {
     case CREATE_ORDER_REQUEST: {
       return {
