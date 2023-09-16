@@ -1,39 +1,46 @@
 import { useParams } from "react-router";
 import styles from "./order-info.module.css";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hook";
 import Loader from "../../components/loader/loader";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import {
   calculateTotalPrice,
-  getFormattedDate,
   getIngredientsWithCount,
-  getTimeZone,
+  getTimeZone, TIngredientsWithCountObj,
 } from "../../utils/order";
 import { ORDER_STATUS } from "../../utils/constants";
 import { getOrder } from "../../services/actions/order";
-import PropTypes from "prop-types";
+import {RootState} from "../../services/types";
 
-export const OrderInfoPage = ({ inModal }) => {
-  const { id } = useParams();
+interface IOrderInfoPageProps {
+  inModal: boolean;
+}
+
+type TIdParams = {
+  id: string;
+}
+
+export const OrderInfoPage = ({ inModal }: IOrderInfoPageProps) => {
+  const { id } = useParams<TIdParams>();
   const dispatch = useDispatch();
-  let ingredientsWithCount = [];
+  let ingredientsWithCount: Array<TIngredientsWithCountObj> = [];
   let timeZone;
   let formattedDate;
   let totalPrice;
 
-  const getBurgerIngredients = (store) => store.burgerIngredients.ingredients;
+  const getBurgerIngredients = (store: RootState) => store.burgerIngredients.ingredients;
   const burgerIngredients = useSelector(getBurgerIngredients);
-  const getIngredientsRequest = (store) =>
+  const getIngredientsRequest = (store: RootState) =>
     store.burgerIngredients.ingredientsRequest;
   const ingredientsRequest = useSelector(getIngredientsRequest);
 
-  const findOrder = (store) => {
+  const findOrder = (store: RootState) => {
     let order;
     if (store.feedOrders.ordersData) {
       order = store.feedOrders.ordersData.orders.find(
-        (order) => order.number === +id
+        (order) => order.number === +id!
       );
       if (order) {
         return order;
@@ -41,7 +48,7 @@ export const OrderInfoPage = ({ inModal }) => {
     }
     if (store.profileOrders.ordersData) {
       order = store.profileOrders.ordersData.orders.find(
-        (order) => order.number === +id
+        (order) => order.number === +id!
       );
       if (order) {
         return order;
@@ -54,7 +61,7 @@ export const OrderInfoPage = ({ inModal }) => {
     return null;
   };
   const order = useSelector(findOrder);
-  const getOrderRequest = (store) => store.orderData.getOrderRequest;
+  const getOrderRequest = (store: RootState) => store.orderData.getOrderRequest;
   const orderRequest = useSelector(getOrderRequest);
 
   useEffect(() => {
@@ -72,15 +79,12 @@ export const OrderInfoPage = ({ inModal }) => {
       order,
       burgerIngredients
     );
+    timeZone = getTimeZone(order.updatedAt);
+    formattedDate = <FormattedDate date={new Date(order.updatedAt)}/>;
+    totalPrice = calculateTotalPrice(ingredientDataList);
     for (let key in ingredientDataList) {
       ingredientsWithCount.push(ingredientDataList[key]);
     }
-  }
-
-  if (order) {
-    timeZone = getTimeZone(order.updatedAt);
-    formattedDate = getFormattedDate(order.updatedAt);
-    totalPrice = calculateTotalPrice(ingredientsWithCount);
   }
 
   if (orderRequest || ingredientsRequest) {
@@ -170,8 +174,4 @@ export const OrderInfoPage = ({ inModal }) => {
       </div>
     </div>
   );
-};
-
-OrderInfoPage.propTypes = {
-  inModal: PropTypes.bool.isRequired,
 };

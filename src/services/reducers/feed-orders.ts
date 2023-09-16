@@ -1,4 +1,4 @@
-import {TOrderData, WebsocketStatus} from "../types/data";
+import {TGetOrdersResponse, WebsocketStatus} from "../types/data";
 import {
   wsCloseFeedOrders,
   wsConnectingFeedOrders,
@@ -9,7 +9,7 @@ import {createReducer} from "@reduxjs/toolkit";
 
 export type TFeedOrdersState = {
   status: WebsocketStatus,
-  ordersData: Array<TOrderData> | null;
+  ordersData: TGetOrdersResponse | null;
   connectingError: string;
 }
 

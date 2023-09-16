@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hook";
 import React, { useMemo } from "react";
 import styles from "./feed.module.css";
 import { Orders } from "../../components/orders/orders";
+import {RootState} from "../../services/types";
 
 export const FeedPage = () => {
-  const getOrdersData = (store) => store.feedOrders.ordersData;
+  const getOrdersData = (store: RootState) => store.feedOrders.ordersData;
   const ordersData = useSelector(getOrdersData);
 
   const doneOrderList = useMemo(() => {
@@ -35,7 +36,7 @@ export const FeedPage = () => {
               <ul
                 className={`${styles.doneOderList} ${styles.orderNumberList}`}
               >
-                {doneOrderList.map((order, idx) => {
+                {doneOrderList!.map((order, idx) => {
                   return (
                     <li
                       key={idx}
@@ -54,7 +55,7 @@ export const FeedPage = () => {
               <ul
                 className={`${styles.inWorkOrderList} ${styles.orderNumberList}`}
               >
-                {inWorkOrderList.map((order, idx) => {
+                {inWorkOrderList!.map((order, idx) => {
                   return (
                     <li key={idx} className="text text_type_digits-default">
                       {order.number}

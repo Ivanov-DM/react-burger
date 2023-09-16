@@ -1,4 +1,4 @@
-import {TOrderData, WebsocketStatus} from "../types/data";
+import {TGetOrdersResponse, WebsocketStatus} from "../types/data";
 import {
   wsCloseProfileOrders,
   wsConnectingProfileOrders,
@@ -10,7 +10,7 @@ import {createReducer} from "@reduxjs/toolkit";
 
 export type TProfileOrdersState = {
   status: WebsocketStatus,
-  ordersData: Array<TOrderData> | null;
+  ordersData: TGetOrdersResponse | null;
   connectingError: string;
 }
 

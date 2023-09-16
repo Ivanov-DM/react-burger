@@ -4,7 +4,7 @@ import {
     TGetIngredientsResponse,
     TRefreshData,
     TCreateOrderResponse,
-    TUserResponseData, TGetOrderResponse, TAuthResponse, TUserRequestData
+    TGetOrderResponse, TAuthResponse, TUserRequestData
 } from "../services/types/data";
 
 type TApiOptions = {
@@ -76,7 +76,7 @@ export const getUserRequest = () =>
     },
   });
 
-export const updateUserRequest = (data: TUserResponseData) =>
+export const updateUserRequest = (data: TUserRequestData) =>
   fetchWithRefresh<TAuthResponse>(`${BURGER_API_URL}/auth/user`, {
     method: "PATCH",
     headers: {

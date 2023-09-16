@@ -41,13 +41,13 @@ export function burgerConstructorReducer(
         ...state,
         constructorIngredients: {
           bun:
-            action.ingredient.type === "bun"
-              ? [action.ingredient]
-              : state.constructorIngredients.bun,
+              action.ingredient.type === "bun"
+                  ? [action.ingredient]
+                  : state.constructorIngredients.bun,
           fillings:
-            action.ingredient.type !== "bun"
-              ? [...state.constructorIngredients.fillings, action.ingredient]
-              : state.constructorIngredients.fillings,
+              action.ingredient.type !== "bun"
+                  ? [...state.constructorIngredients.fillings, action.ingredient]
+                  : state.constructorIngredients.fillings,
         },
       };
     }
@@ -83,38 +83,47 @@ export function burgerConstructorReducer(
       };
     }
     case INC_INGREDIENT_COUNT: {
-      return {
-        ...state,
-        ingredientsCount: {
-          ...state.ingredientsCount,
-          [action.ingredientId]: state.ingredientsCount[action.ingredientId]
-            ? ++state.ingredientsCount[action.ingredientId]
-            : 1,
-        },
-      };
+      if (state.ingredientsCount[action.ingredientId]) {
+        return {
+          ...state,
+          ingredientsCount: {
+            ...state.ingredientsCount,
+            [action.ingredientId]: state.ingredientsCount[action.ingredientId] + 1,
+          }
+        }
+      } else {
+        return {
+          ...state,
+          ingredientsCount: {
+            ...state.ingredientsCount,
+            [action.ingredientId]: 1,
+          }
+        }
+      }
     }
     case DEC_INGREDIENT_COUNT: {
-      return {
-        ...state,
-        ingredientsCount: {
-          ...state.ingredientsCount,
-          [action.ingredientId]: --state.ingredientsCount[action.ingredientId],
-        },
-      };
+      if (state.ingredientsCount[action.ingredientId]) {
+        return {
+          ...state,
+          ingredientsCount: {
+            ...state.ingredientsCount,
+            [action.ingredientId]: state.ingredientsCount[action.ingredientId] - 1,
+          }
+        }
+      } else {
+        return {...state}
+      }
     }
     case UPDATE_INGREDIENTS_ORDER: {
-      const dragIngredient =
-        state.constructorIngredients.fillings[action.dragIndex];
-      const hoverIngredient =
-        state.constructorIngredients.fillings[action.hoverIndex];
-      state.constructorIngredients.fillings[action.dragIndex] = hoverIngredient;
-      state.constructorIngredients.fillings[action.hoverIndex] = dragIngredient;
+      const ingredients = [...state.constructorIngredients.fillings];
+      ingredients.splice(action.hoverIndex, 0, ingredients.splice(action.dragIndex, 1)[0]);
       return {
         ...state,
         constructorIngredients: {
           ...state.constructorIngredients,
-        },
-      };
+          fillings: ingredients
+        }
+      }
     }
     default:
       return state;

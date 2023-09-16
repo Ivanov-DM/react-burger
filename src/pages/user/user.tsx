@@ -1,7 +1,7 @@
-import React, { useCallback } from "react";
+import React, {FormEvent, useCallback} from "react";
 import styles from "./user.module.css";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hook";
 import { signOut } from "../../services/actions/auth";
 import Loader from "../../components/loader/loader";
 
@@ -9,14 +9,14 @@ export const UserPage = () => {
   const dispatch = useDispatch();
   const signOutRequest = useSelector((store) => store.userData.signOutRequest);
   const location = useLocation();
-  const captionText = {
+  const captionText: {[key: string]: string} = {
     "/profile": "В этом разделе вы можете изменить свои персональные данные",
     "/profile/orders":
       "В этом разделе вы можете просмотреть свою историю заказов",
   };
 
   const logout = useCallback(
-    (evt) => {
+    (evt: FormEvent) => {
       evt.preventDefault();
       dispatch(signOut());
     },

@@ -1,5 +1,5 @@
 import styles from "./order-card.module.css";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -7,18 +7,20 @@ import {
   getIngredientsWithCount,
   getIngredientIcons,
   getTimeZone,
-  getFormattedDate,
 } from "../../utils/order";
 import { ORDER_STATUS } from "../../utils/constants";
-import { ingredientProptypes, orderProptypes } from "../../utils/prop-types";
-import PropTypes from "prop-types";
+import {TIngredientData, TOrderData} from "../../services/types/data";
 
-export const OrderCard = ({ orderData, ingredients }) => {
+interface IOrderCardProps {
+  orderData: TOrderData;
+  ingredients: ReadonlyArray<TIngredientData>;
+}
+
+export const OrderCard = ({ orderData, ingredients }: IOrderCardProps) => {
   const location = useLocation();
   const ingredientsWithCount = getIngredientsWithCount(orderData, ingredients);
   const ingredientsIcons = getIngredientIcons(ingredientsWithCount, 6);
   const timeZone = getTimeZone(orderData.updatedAt);
-  const formattedDate = getFormattedDate(orderData.updatedAt);
   const totalPrice = calculateTotalPrice(ingredientsWithCount);
 
   return (
@@ -33,7 +35,7 @@ export const OrderCard = ({ orderData, ingredients }) => {
             &#35;{orderData.number}
           </h2>
           <p className="text text_type_main-small text_color_inactive">
-            {formattedDate} i-{timeZone}
+            <FormattedDate date={new Date(orderData.updatedAt)}/> i-{timeZone}
           </p>
         </div>
         <p className="text text_type_main-medium mb-2">{orderData.name}</p>
@@ -77,9 +79,4 @@ export const OrderCard = ({ orderData, ingredients }) => {
       </div>
     </Link>
   );
-};
-
-OrderCard.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientProptypes.isRequired).isRequired,
-  orderData: orderProptypes.isRequired,
 };

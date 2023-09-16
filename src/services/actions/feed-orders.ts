@@ -8,14 +8,14 @@ import {
   FEED_ORDERS_WS_MESSAGE,
   FEED_ORDERS_WS_OPEN
 } from "../constants/feed-orders";
-import {TOrderData} from "../types/data";
+import {TGetOrdersResponse, TOrderData} from "../types/data";
 
 export const connectFeedOrders = createAction<string, typeof FEED_ORDERS_CONNECT>(FEED_ORDERS_CONNECT);
 export const disconnectFeedOrders = createAction(FEED_ORDERS_DISCONNECT);
 export const wsConnectingFeedOrders = createAction(FEED_ORDERS_WS_CONNECTING);
 export const wsOpenFeedOrders = createAction(FEED_ORDERS_WS_OPEN);
 export const wsCloseFeedOrders = createAction(FEED_ORDERS_WS_CLOSE);
-export const wsMessageFeedOrders = createAction<Array<TOrderData>, typeof FEED_ORDERS_WS_MESSAGE>(FEED_ORDERS_WS_MESSAGE);
+export const wsMessageFeedOrders = createAction<TGetOrdersResponse, typeof FEED_ORDERS_WS_MESSAGE>(FEED_ORDERS_WS_MESSAGE);
 export const wsErrorFeedOrders = createAction<string, typeof FEED_ORDERS_WS_ERROR>(FEED_ORDERS_WS_ERROR);
 
 export type TFeedOrdersActions =

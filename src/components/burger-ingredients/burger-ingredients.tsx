@@ -2,17 +2,20 @@ import React, { useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientsStyle from "./burger-ingredients.module.css";
 import IngredientsCategory from "../ingredients-category/ingredients-category";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hook";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import { useInView } from "react-intersection-observer";
+import {RootState} from "../../services/types";
+
+type TActiveTab = "buns" | "sauce" | "filling";
 
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
 
-  const getBurgerIngredients = (store) => store.burgerIngredients.ingredients;
+  const getBurgerIngredients = (store: RootState) => store.burgerIngredients.ingredients;
   const burgerIngredients = useSelector(getBurgerIngredients);
 
-  const [activeTab, setActiveTab] = React.useState("buns");
+  const [activeTab, setActiveTab] = React.useState<TActiveTab>("buns");
   const [bunsRef, bunsInView, bunsTab] = useInView({ threshold: 0 });
   const [saucesRef, saucesInView, saucesTab] = useInView({ threshold: 0 });
   const [mainsRef, mainsInView, mainsTab] = useInView({ threshold: 0 });
@@ -27,9 +30,11 @@ export default function BurgerIngredients() {
     (ingredient) => ingredient.type === "main"
   );
 
-  const onTabClick = (tabType, entry) => {
+  const onTabClick = (tabType: TActiveTab, entry: IntersectionObserverEntry | undefined) => {
     setActiveTab(tabType);
-    entry.target.scrollIntoView({ behavior: "smooth" });
+    if (entry) {
+      entry.target.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {

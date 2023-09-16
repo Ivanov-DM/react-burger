@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, {ChangeEvent, FormEvent, useCallback, useState} from "react";
 import { useNavigate } from "react-router";
 import {
   PasswordInput,
@@ -14,16 +14,16 @@ export const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const [form, setValue] = useState({ password: "", token: "" });
 
-  const handleClick = (path) => {
+  const handleClick = (path: string) => {
     navigate(path, { replace: true });
   };
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const resetPassword = useCallback(
-    (evt) => {
+    (evt: FormEvent) => {
       evt.preventDefault();
       resetPasswordRequest(form).then((res) => {
         if (res.success) {

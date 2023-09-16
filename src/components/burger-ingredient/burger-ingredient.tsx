@@ -4,16 +4,21 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredientStyles from "./burger-ingredient.module.css";
-import { ingredientProptypes } from "../../utils/prop-types";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hook";
 import { Link, useLocation } from "react-router-dom";
+import {RootState} from "../../services/types";
+import {TIngredientData} from "../../services/types/data";
 
-export default function BurgerIngredient(props) {
+interface IBurgerIngredientProps {
+  ingredient: TIngredientData
+}
+
+export default function BurgerIngredient(props: IBurgerIngredientProps) {
   const location = useLocation();
   const ingredient = props.ingredient;
 
-  const getIngredientCount = (store) =>
+  const getIngredientCount = (store: RootState) =>
     store.constructorIngredients.ingredientsCount;
 
   const ingredientsCount = useSelector(getIngredientCount);
@@ -38,7 +43,7 @@ export default function BurgerIngredient(props) {
         />
         {ingredientsCount[ingredient._id] ? (
           <Counter
-            className={burgerIngredientStyles.counter}
+            extraClass={burgerIngredientStyles.counter}
             count={ingredientsCount[ingredient._id]}
             size="default"
           />
@@ -62,7 +67,3 @@ export default function BurgerIngredient(props) {
     </Link>
   );
 }
-
-BurgerIngredient.propTypes = {
-  ingredient: ingredientProptypes.isRequired,
-};

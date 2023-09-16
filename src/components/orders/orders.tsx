@@ -1,5 +1,5 @@
 import styles from "./orders.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hook";
 import React, { useEffect } from "react";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import { BURGER_API_WEBSOCKET_URL } from "../../utils/constants";
@@ -15,6 +15,8 @@ import {
   connectFeedOrders,
   disconnectFeedOrders,
 } from "../../services/actions/feed-orders";
+import {RootState} from "../../services/types";
+import {TGetOrdersResponse} from "../../services/types/data";
 
 export const Orders = () => {
   const dispatch = useDispatch();
@@ -24,10 +26,10 @@ export const Orders = () => {
     caseSensitive: true,
   });
 
-  const getBurgerIngredients = (store) => store.burgerIngredients.ingredients;
+  const getBurgerIngredients = (store: RootState) => store.burgerIngredients.ingredients;
   const burgerIngredients = useSelector(getBurgerIngredients);
 
-  const getOrdersData = (store) => {
+  const getOrdersData = (store: RootState): TGetOrdersResponse | null => {
     let ordersData;
     if (match) {
       ordersData = store.profileOrders.ordersData;

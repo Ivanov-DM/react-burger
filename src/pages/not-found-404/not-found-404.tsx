@@ -10,7 +10,7 @@ import rocketImg from "../../images/rocket.svg";
 export const NotFound404 = () => {
   const navigate = useNavigate();
 
-  const handleClick = (path) => {
+  const handleClick = (path: string) => {
     navigate(path, { replace: true });
   };
 

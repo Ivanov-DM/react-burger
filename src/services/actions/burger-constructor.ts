@@ -9,6 +9,7 @@ import {
     UPDATE_INGREDIENTS_ORDER
 } from "../constants/burger-constructor";
 import {TIngredientData} from "../types/data";
+import {v4 as uuidv4} from "uuid";
 
 interface IAddIngredientAction {
     readonly type: typeof ADD_INGREDIENT;
@@ -52,7 +53,10 @@ interface IUpdateIngredientsAction {
 
 export const addIngredientAction = (ingredient: TIngredientData): IAddIngredientAction => ({
     type: ADD_INGREDIENT,
-    ingredient
+    ingredient: {
+        ...ingredient,
+        uuid: uuidv4(),
+    }
 });
 
 export const deleteIngredientAction = (index: number): IDeleteIngredientAction => ({

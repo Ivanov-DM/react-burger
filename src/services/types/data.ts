@@ -14,11 +14,6 @@ export type TIngredientData = {
     uuid?: string;
 }
 
-export type TIngredients = {
-    success: boolean;
-    data: ReadonlyArray<TIngredientData>;
-}
-
 export type TUserResponseData = {
     email: string;
     name: string;
@@ -27,7 +22,7 @@ export type TUserResponseData = {
 export type TUserRequestData = {
     email?: string;
     name?: string;
-    password: string;
+    password?: string;
     token?: string;
 }
 
@@ -56,7 +51,7 @@ type TOrderOwnerData = {
 }
 
 export type TOrderData = {
-    ingredients: Array<TIngredientData>;
+    ingredients: Array<string>;
     _id: string;
     owner: TOrderOwnerData;
     status: "created" | "done" | "pending";
@@ -79,6 +74,13 @@ export type TAuthResponse = {
     message?: string;
     accessToken?: string;
     refreshToken?: string;
+}
+
+export type TGetOrdersResponse = {
+    success: boolean;
+    orders: Array<TOrderData>;
+    total: number;
+    totalToday: number;
 }
 
 export enum WebsocketStatus {

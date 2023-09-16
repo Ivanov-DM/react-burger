@@ -3,7 +3,7 @@ import {
   ActionCreatorWithPayload,
   Middleware,
 } from "@reduxjs/toolkit";
-import {RootState} from "../types/index";
+import {RootState} from "../types";
 
 export type TWsActionTypes = {
   wsConnect: ActionCreatorWithPayload<string>;

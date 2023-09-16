@@ -1,16 +1,21 @@
 import ingredientDetailsStyles from "./ingredient-details.module.css";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hook";
 import { useParams } from "react-router";
 import { getIngredients } from "../../services/actions/burger-ingredients";
-import PropTypes from "prop-types";
+import {RootState} from "../../services/types";
+import {TIngredientData} from "../../services/types/data";
 
-export default function IngredientDetails({ inModal }) {
+interface IIngredientDetailsProps {
+  inModal: boolean;
+}
+
+export default function IngredientDetails({ inModal }: IIngredientDetailsProps) {
   const { ingredientId } = useParams();
   const dispatch = useDispatch();
-  const getBurgerIngredients = (store) => store.burgerIngredients.ingredients;
+  const getBurgerIngredients = (store: RootState) => store.burgerIngredients.ingredients;
   const burgerIngredients = useSelector(getBurgerIngredients);
-  let ingredientDetails = {};
+  let ingredientDetails: TIngredientData | undefined;
 
   if (burgerIngredients.length !== 0) {
     ingredientDetails = burgerIngredients.find(
@@ -31,13 +36,13 @@ export default function IngredientDetails({ inModal }) {
       ) : null}
       <img
         className={ingredientDetailsStyles.image}
-        src={ingredientDetails.image}
-        alt={ingredientDetails.name}
+        src={ingredientDetails!.image}
+        alt={ingredientDetails!.name}
       />
       <h3
         className={`${ingredientDetailsStyles.name} text text_type_main-medium mt-4 mb-8`}
       >
-        {ingredientDetails.name}
+        {ingredientDetails!.name}
       </h3>
       <ul className={ingredientDetailsStyles.details}>
         <li className={ingredientDetailsStyles.details__item}>
@@ -45,7 +50,7 @@ export default function IngredientDetails({ inModal }) {
             Калории, ккал
           </p>
           <p className="text text_type_digits-default text_color_inactive">
-            {ingredientDetails.calories}
+            {ingredientDetails!.calories}
           </p>
         </li>
         <li className={ingredientDetailsStyles.details__item}>
@@ -53,7 +58,7 @@ export default function IngredientDetails({ inModal }) {
             Белки, г
           </p>
           <p className="text text_type_digits-default text_color_inactive">
-            {ingredientDetails.proteins}
+            {ingredientDetails!.proteins}
           </p>
         </li>
         <li className={ingredientDetailsStyles.details__item}>
@@ -61,7 +66,7 @@ export default function IngredientDetails({ inModal }) {
             Жиры, г
           </p>
           <p className="text text_type_digits-default text_color_inactive">
-            {ingredientDetails.fat}
+            {ingredientDetails!.fat}
           </p>
         </li>
         <li className={ingredientDetailsStyles.details__item}>
@@ -69,14 +74,10 @@ export default function IngredientDetails({ inModal }) {
             Углеводы, г
           </p>
           <p className="text text_type_digits-default text_color_inactive">
-            {ingredientDetails.carbohydrates}
+            {ingredientDetails!.carbohydrates}
           </p>
         </li>
       </ul>
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  inModal: PropTypes.bool.isRequired,
-};

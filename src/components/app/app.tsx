@@ -16,7 +16,7 @@ import {
 } from "../../pages";
 import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route";
 import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/types/hook";
 import AppHeader from "../app-header/app-header";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";

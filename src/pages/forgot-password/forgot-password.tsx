@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import { useNavigate } from "react-router";
 import {
   EmailInput,
@@ -12,20 +12,20 @@ export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
-  const handleClick = (path) => {
+  const handleClick = (path: string) => {
     navigate(path, { replace: true });
   };
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const reset = (evt) => {
+  const reset = (evt: FormEvent) => {
     evt.preventDefault();
     forgotPasswordRequest(email)
       .then((res) => {
         if (res.success) {
-          localStorage.setItem("resetPasswordSuccess", res.success);
+          localStorage.setItem("resetPasswordSuccess", res.success.toString());
           navigate("/reset-password", { replace: true });
         }
       })

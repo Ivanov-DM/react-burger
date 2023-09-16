@@ -1,10 +1,13 @@
 import React from "react";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import ingredientsCategoryStyle from "./ingredients-category.module.css";
-import PropTypes from "prop-types";
-import { ingredientProptypes } from "../../utils/prop-types";
+import {TIngredientData} from "../../services/types/data";
 
-export default function IngredientsCategory(props) {
+interface IIngredientsCategoryProps {
+  ingredients: ReadonlyArray<TIngredientData>;
+}
+
+export default function IngredientsCategory(props: IIngredientsCategoryProps) {
   const ingredients = props.ingredients;
 
   return (
@@ -19,7 +22,3 @@ export default function IngredientsCategory(props) {
     </ul>
   );
 }
-
-IngredientsCategory.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientProptypes.isRequired).isRequired,
-};

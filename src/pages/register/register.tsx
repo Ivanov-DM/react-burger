@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, {ChangeEvent, FormEvent, useCallback, useState} from "react";
 import { useNavigate } from "react-router";
 import {
   EmailInput,
@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "../login/page.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/types/hook";
 import { registerUser } from "../../services/actions/auth";
 
 export const RegisterPage = () => {
@@ -16,16 +16,16 @@ export const RegisterPage = () => {
   const [form, setValue] = useState({ email: "", password: "", name: "" });
   const navigate = useNavigate();
 
-  const handleClick = (path) => {
+  const handleClick = (path: string) => {
     navigate(path, { replace: true });
   };
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
   const register = useCallback(
-    (evt) => {
+    (evt: FormEvent) => {
       evt.preventDefault();
       dispatch(registerUser(form));
     },
